@@ -1,0 +1,133 @@
+# Расширенный robots.txt для максимального SEO
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# Основные страницы и ресурсы
+Allow: /index.html
+Allow: /style.css
+Allow: /app.js
+Allow: /manifest.json
+Allow: /sitemap.xml
+Allow: /humans.txt
+Allow: /ads.txt
+Allow: /.well-known/
+
+# Изображения и медиа
+Allow: /photo_2022-07-26_20-37-26.jpg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /image.png
+
+# SEO файлы
+Allow: /robots.txt
+Allow: /social-profiles.txt
+Allow: /social-seo.md
+Allow: /social-analytics.json
+
+# Заблокированные области (добавьте при необходимости)
+# Disallow: /admin/
+# Disallow: /temp/
+# Disallow: /backup/
+
+# Специальные правила для поисковых ботов
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Архивные боты
+User-agent: ia_archiver
+Allow: /
+
+User-agent: Wayback
+Allow: /
+
+# Блокировка плохих ботов
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Карта сайта
+Sitemap: https://skhlebnikov.ru/sitemap.xml
+
+# Хост (основной домен)
+Host: skhlebnikov.ru
+Allow: /index.html
+Allow: /style.css
+Allow: /app.js
+Allow: /photo_2022-07-26_20-37-26.jpg
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /manifest.json
+Allow: /humans.txt
+
+# Запретить служебные и технические файлы
+Disallow: /*.pdf$
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /.cursor/
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /*?print=*
+Disallow: /*?ajax=*
+Disallow: /*?debug=*
+
+# Разрешить основные боты
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+# Карта сайта
+Sitemap: https://skhlebnikov.ru/sitemap.xml
+
+# Настройки краулинга
+Crawl-delay: 1
+Request-rate: 1/1s
+Visit-time: 0600-2300
+
+# Host (предпочитаемый домен)
+Host: skhlebnikov.ru

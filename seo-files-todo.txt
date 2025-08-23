@@ -1,0 +1,21 @@
+# Дополнительные файлы для Google Search Console
+# Google Verification Files
+google4ba5f8c2e1a8d9e6.html
+googled4e8b2c3f5a1b9e7.html
+
+# Bing Verification Files  
+BingSiteAuth.xml
+BingSiteAuth.txt
+
+# Apple App Site Association (для будущих мобильных приложений)
+apple-app-site-association
+
+# Security.txt (стандарт RFC 9116)
+.well-known/security.txt
+
+# Ads.txt (для будущих рекламных объявлений)
+ads.txt
+
+# Дополнительные SEO файлы
+yandex_verification.html
+pinterest-verification.html

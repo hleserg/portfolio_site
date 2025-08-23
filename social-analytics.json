@@ -1,0 +1,49 @@
+{
+  "social_media_tracking": {
+    "last_updated": "2025-08-24",
+    "profiles": [
+      {
+        "platform": "VK",
+        "url": "https://vk.com/serg.khlebnikov",
+        "username": "serg.khlebnikov",
+        "analytics_enabled": true,
+        "tracking_params": "utm_source=website&utm_medium=social&utm_campaign=vk_profile"
+      },
+      {
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/hleserg/",
+        "username": "hleserg",
+        "analytics_enabled": true,
+        "tracking_params": "utm_source=website&utm_medium=social&utm_campaign=instagram_profile"
+      },
+      {
+        "platform": "GitHub",
+        "url": "https://github.com/hleserg",
+        "username": "hleserg",
+        "analytics_enabled": true,
+        "tracking_params": "utm_source=website&utm_medium=social&utm_campaign=github_profile"
+      },
+      {
+        "platform": "Telegram",
+        "url": "https://t.me/skhlebnikov",
+        "username": "skhlebnikov",
+        "analytics_enabled": true,
+        "tracking_params": "utm_source=website&utm_medium=social&utm_campaign=telegram_profile"
+      }
+    ],
+    "sharing_options": {
+      "enabled": true,
+      "platforms": ["vk", "telegram", "whatsapp"],
+      "default_text": "Ведущий программист 1С - Сергей Хлебников. Интеграция ФГИС Меркурий, мобильные приложения ТСД."
+    },
+    "social_seo": {
+      "og_image": "/photo_2022-07-26_20-37-26.jpg",
+      "twitter_card": "summary_large_image",
+      "social_verification": {
+        "vk_verification": "enabled",
+        "instagram_verification": "enabled", 
+        "github_verification": "enabled"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+Contact: mailto:security@skhlebnikov.ru
+Contact: https://skhlebnikov.ru/#contact
+Contact: https://t.me/skhlebnikov
+Expires: 2026-08-24T12:00:00.000Z
+Encryption: https://skhlebnikov.ru/pgp-key.txt
+Preferred-Languages: ru, en
+Canonical: https://skhlebnikov.ru/.well-known/security.txt
+Policy: https://skhlebnikov.ru/security-policy
+Acknowledgments: https://skhlebnikov.ru/security-acknowledgments
+
+# Политика ответственного раскрытия уязвимостей
+# Мы ценим исследователей безопасности и просим сообщать о найденных уязвимостях
+# ответственным образом через указанные контакты.

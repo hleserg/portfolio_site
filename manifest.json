@@ -1,0 +1,46 @@
+{
+  "name": "Сергей Хлебников - Программист 1С",
+  "short_name": "skhlebnikov",
+  "description": "Ведущий программист 1С с опытом 10+ лет. Интеграция ФГИС Меркурий, мобильные приложения ТСД.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fcfcf9",
+  "theme_color": "#218c8d",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "ru",
+  "related_applications": [
+    {
+      "platform": "web",
+      "url": "https://vk.com/serg.khlebnikov",
+      "id": "vk_profile"
+    },
+    {
+      "platform": "web", 
+      "url": "https://www.instagram.com/hleserg/",
+      "id": "instagram_profile"
+    },
+    {
+      "platform": "web",
+      "url": "https://github.com/hleserg",
+      "id": "github_profile"
+    },
+    {
+      "platform": "web",
+      "url": "https://t.me/skhlebnikov",
+      "id": "telegram_profile"
+    }
+  ],
+  "prefer_related_applications": false
+}

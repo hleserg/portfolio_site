@@ -1,0 +1,158 @@
+# SEO-оптимизированный .htaccess для максимальной производительности
+
+# Включаем сжатие GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/ld+json
+</IfModule>
+
+# Настройка кэширования для максимальной скорости
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # HTML (обновляется часто)
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # CSS и JavaScript (обновляется при изменениях)
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    
+    # Изображения (редко меняются)
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+    
+    # Шрифты
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+    ExpiresByType font/truetype "access plus 1 year"
+    
+    # Документы
+    ExpiresByType application/pdf "access plus 1 month"
+    
+    # Манифесты и конфигурации
+    ExpiresByType application/manifest+json "access plus 1 week"
+    ExpiresByType application/xml "access plus 1 week"
+    ExpiresByType text/xml "access plus 1 week"
+</IfModule>
+
+# Альтернативное кэширование через заголовки Cache-Control
+<IfModule mod_headers.c>
+    # Безопасность заголовков
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    
+    # Content Security Policy для безопасности
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' *.yandex.ru *.google.com *.google-analytics.com *.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: *.yandex.ru *.google-analytics.com; connect-src 'self' *.yandex.ru *.google-analytics.com"
+    
+    # Кэш для статических ресурсов
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|eot|ttf)$">
+        Header set Cache-Control "public, max-age=31536000"
+    </FilesMatch>
+    
+    # Кэш для HTML
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=3600"
+    </FilesMatch>
+</IfModule>
+
+# Редиректы для SEO (убираем дублирующие страницы)
+RewriteEngine On
+
+# Принудительное использование HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Принудительное добавление слэша в конце
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule . %{REQUEST_URI}/ [R=301,L]
+
+# Редирект с www на без www (выберите один вариант)
+RewriteCond %{HTTP_HOST} ^www\.skhlebnikov\.ru [NC]
+RewriteRule ^(.*)$ https://skhlebnikov.ru/$1 [R=301,L]
+
+# Убираем index.html из URL
+RewriteCond %{THE_REQUEST} /index\.html[\s?] [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+
+# MIME типы для лучшей совместимости
+<IfModule mod_mime.c>
+    AddType application/javascript .js
+    AddType text/css .css
+    AddType application/manifest+json .webmanifest
+    AddType application/xml .xml
+    AddType image/svg+xml .svg
+    AddType image/x-icon .ico
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+</IfModule>
+
+# Включение FollowSymLinks для корректной работы
+Options +FollowSymLinks
+
+# Отключение индексации директорий
+Options -Indexes
+
+# Сжатие gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Кэширование браузера
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresDefault "access plus 2 days"
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options SAMEORIGIN
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # Social Media Optimization headers
+    Header always set X-Social-VK "https://vk.com/serg.khlebnikov"
+    Header always set X-Social-Instagram "https://www.instagram.com/hleserg/"
+    Header always set X-Social-GitHub "https://github.com/hleserg"
+    Header always set X-Social-Telegram "https://t.me/skhlebnikov"
+</IfModule>

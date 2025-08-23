@@ -1,0 +1,8 @@
+# Google Search Console верификация
+google-site-verification: подставить_код_верификации_от_google
+
+# Bing Webmaster Tools верификация  
+msvalidate.01: подставить_код_верификации_от_bing
+
+# Yandex Webmaster верификация
+yandex-verification: подставить_код_верификации_от_yandex

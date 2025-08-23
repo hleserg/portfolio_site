@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница не найдена - 404 | Хлебников Сергей Юрьевич</title>
+    <meta name="description" content="Запрашиваемая страница не найдена. Вернитесь на главную страницу сайта программиста 1С Сергея Хлебникова.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://skhlebnikov.ru/">
+    <link rel="stylesheet" href="/style.css">
+    
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-40);
+        }
+        
+        .error-content {
+            max-width: 600px;
+        }
+        
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            color: var(--color-primary);
+            line-height: 1;
+            margin-bottom: var(--space-20);
+        }
+        
+        .error-title {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--space-16);
+            color: var(--color-text);
+        }
+        
+        .error-description {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-32);
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: var(--space-16);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            padding: var(--space-12) var(--space-24);
+            background: var(--color-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-weight-medium);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-home:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            padding: var(--space-12) var(--space-24);
+            border: 2px solid var(--color-border);
+            color: var(--color-text);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-weight-medium);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 80px;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-home,
+            .btn-back {
+                width: 100%;
+                max-width: 200px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="error-page">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Страница не найдена</h1>
+            <p class="error-description">
+                К сожалению, запрашиваемая страница не существует или была перемещена. 
+                Возможно, вы перешли по устаревшей ссылке или неправильно набрали адрес.
+            </p>
+            
+            <div class="error-actions">
+                <a href="/" class="btn-home">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    На главную
+                </a>
+                
+                <button onclick="history.back()" class="btn-back">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Назад
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Отправка информации о 404 ошибке в аналитику
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_title: '404 - Страница не найдена',
+                page_location: window.location.href,
+                custom_map: {'dimension1': '404_error'}
+            });
+        }
+        
+        if (typeof ym !== 'undefined') {
+            ym(103868763, 'hit', window.location.href, {
+                title: '404 - Страница не найдена',
+                referer: document.referrer
+            });
+        }
+    </script>
+</body>
+</html>
