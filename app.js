@@ -748,4 +748,38 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Применяем функциональность кликабельных иконок
     makeContactIconsClickable();
+
+    // Функциональность кнопки "Наверх"
+    function initScrollToTop() {
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        if (!scrollToTopBtn) return;
+
+        // Показываем/скрываем кнопку в зависимости от позиции прокрутки
+        function toggleScrollButton() {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        }
+
+        // Плавная прокрутка наверх
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Обработчики событий
+        window.addEventListener('scroll', toggleScrollButton);
+        scrollToTopBtn.addEventListener('click', scrollToTop);
+
+        // Проверяем при загрузке страницы
+        toggleScrollButton();
+    }
+
+    // Инициализируем кнопку "Наверх"
+    initScrollToTop();
 });

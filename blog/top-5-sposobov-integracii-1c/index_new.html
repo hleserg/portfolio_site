@@ -3,36 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="🔥 ТОП-5 способов интеграции 1С: REST API, SOAP, файловый обмен, COM-соединения, прямой доступ к БД. Подробные примеры кода, сравнение производительности. Выбираем оптимальный метод для каждой задачи. 📊 Реальный опыт проектов.">
-    <meta name="keywords" content="1С интеграция, REST API 1С, SOAP веб-сервисы 1С, COM соединения 1С, интеграция систем 1С, обмен данными 1С, XDTO 1С, JSON 1С, базы данных 1С, OData 1С, веб-сервисы 1С, автоматизация обмена данными, примеры интеграции 1С">
+    <meta name="description" content="Подробное сравнение методов интеграции 1С с внешними системами. REST API, SOAP, файловый обмен, COM-соединения и прямой доступ к БД — выбираем оптимальный способ для каждой задачи.">
+    <meta name="keywords" content="1С интеграция, REST API 1С, SOAP веб-сервисы, COM соединения, интеграция систем, обмен данными 1С, XDTO, JSON 1С, базы данных 1С">
     <meta name="author" content="Хлебников Сергей Юрьевич">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-    <meta name="googlebot" content="index, follow">
-    <meta name="article:published_time" content="2025-08-24T20:00:00+03:00">
-    <meta name="article:modified_time" content="2025-08-24T20:00:00+03:00">
-    <meta name="article:author" content="Хлебников Сергей Юрьевич">
-    <meta name="article:section" content="Разработка">
-    <meta name="article:tag" content="1С интеграция, REST API, SOAP, COM соединения"
     
     <!-- Open Graph -->
-    <meta property="og:title" content="🔥 ТОП-5 способов интеграции 1С: от REST API до прямого доступа к БД">
-    <meta property="og:description" content="Подробное сравнение методов интеграции 1С с внешними системами. REST API, SOAP, файловый обмен, COM-соединения и прямой доступ к БД. Примеры кода и реальный опыт проектов.">
+    <meta property="og:title" content="Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД">
+    <meta property="og:description" content="Подробное сравнение методов интеграции 1С с внешними системами. REST API, SOAP, файловый обмен, COM-соединения и прямой доступ к БД — выбираем оптимальный способ для каждой задачи.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/">
     <meta property="og:image" content="https://skhlebnikov.ru/images/og-integraciya-1c.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Топ-5 способов интеграции 1С - инфографика">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:site_name" content="Хлебников Сергей Юрьевич">
-    <meta property="article:author" content="https://skhlebnikov.ru/">
-    <meta property="article:published_time" content="2025-08-24T20:00:00+03:00">
-    <meta property="article:modified_time" content="2025-08-24T20:00:00+03:00">
-    <meta property="article:section" content="Разработка">
-    <meta property="article:tag" content="1С интеграция">
-    <meta property="article:tag" content="REST API">
-    <meta property="article:tag" content="SOAP">
-    <meta property="article:tag" content="COM соединения">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -40,70 +22,43 @@
     <meta name="twitter:description" content="Подробное сравнение методов интеграции 1С с внешними системами. REST API, SOAP, файловый обмен, COM-соединения и прямой доступ к БД — выбираем оптимальный способ для каждой задачи.">
     <meta name="twitter:image" content="https://skhlebnikov.ru/images/og-integraciya-1c.jpg">
     
-    <title>🔥 ТОП-5 способов интеграции 1С: REST API, SOAP, COM | Примеры кода 2025</title>
+    <title>Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД | Хлебников Сергей</title>
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/">
     
     <!-- Structured Data -->
     <script type="application/ld+json">
-    [
-        {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": "🔥 ТОП-5 способов интеграции 1С: от REST API до прямого доступа к БД",
-            "description": "Подробное сравнение методов интеграции 1С с внешними системами. REST API, SOAP, файловый обмен, COM-соединения и прямой доступ к БД — выбираем оптимальный способ для каждой задачи.",
-            "author": {
-                "@type": "Person",
-                "name": "Хлебников Сергей Юрьевич",
-                "url": "https://skhlebnikov.ru",
-                "jobTitle": "Ведущий программист 1С",
-                "sameAs": [
-                    "https://t.me/skhlebnikov",
-                    "https://github.com/hleserg"
-                ]
-            },
-            "publisher": {
-                "@type": "Person",
-                "name": "Хлебников Сергей Юрьевич",
-                "url": "https://skhlebnikov.ru"
-            },
-            "image": "https://skhlebnikov.ru/images/og-integraciya-1c.jpg",
-            "datePublished": "2025-08-24T20:00:00+03:00",
-            "dateModified": "2025-08-24T20:00:00+03:00",
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": "https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/"
-            },
-            "keywords": ["1С интеграция", "REST API", "SOAP", "COM соединения", "интеграция систем", "XDTO", "JSON 1С", "базы данных 1С"],
-            "articleSection": "Разработка",
-            "wordCount": 4500,
-            "inLanguage": "ru-RU",
-            "isPartOf": {
-                "@type": "Blog",
-                "name": "Блог Сергея Хлебникова",
-                "url": "https://skhlebnikov.ru/#blog"
-            }
-        },
-        {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Главная",
-                    "item": "https://skhlebnikov.ru/"
-                },
-                {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Топ-5 способов интеграции 1С",
-                    "item": "https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/"
-                }
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД",
+        "description": "Подробное сравнение методов интеграции 1С с внешними системами. REST API, SOAP, файловый обмен, COM-соединения и прямой доступ к БД — выбираем оптимальный способ для каждой задачи.",
+        "author": {
+            "@type": "Person",
+            "name": "Хлебников Сергей Юрьевич",
+            "url": "https://skhlebnikov.ru",
+            "sameAs": [
+                "https://t.me/skhlebnikov",
+                "https://github.com/hleserg"
             ]
-        }
-    ]
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Хлебников Сергей Юрьевич",
+            "url": "https://skhlebnikov.ru"
+        },
+        "image": "https://skhlebnikov.ru/images/og-integraciya-1c.jpg",
+        "datePublished": "2025-08-24T20:00:00+03:00",
+        "dateModified": "2025-08-24T20:00:00+03:00",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/"
+        },
+        "keywords": ["1С интеграция", "REST API", "SOAP", "COM соединения", "интеграция систем", "XDTO", "JSON 1С", "базы данных 1С"],
+        "articleSection": "Разработка",
+        "wordCount": 4500
+    }
     </script>
     
     <!-- Favicon -->
@@ -132,39 +87,35 @@
         <header class="header">
             <div class="container">
                 <div class="header__content">
-                    <div class="header__left">
-                        <div class="logo">
-                            <a href="../../index.html" class="logo__link">
-                                <span class="logo__text">С.Ю.Х.</span>
-                            </a>
-                        </div>
-                        <div class="blog-button">
-                            <span class="blog-button__icon">📝</span>
-                            <span class="blog-button__text">Блог</span>
-                        </div>
+                    <div class="header__brand">
+                        <a href="../../index.html" class="header__logo">
+                            <span class="header__logo-text">Хлебников С.Ю.</span>
+                        </a>
                     </div>
-                    <nav class="nav">
-                        <ul class="nav__list">
+                    <nav class="header__nav">
+                        <ul class="header__nav-list">
                             <li><a href="../../index.html#about" class="nav__link">О себе</a></li>
                             <li><a href="../../index.html#experience" class="nav__link">Опыт</a></li>
-                            <li><a href="../../index.html#projects" class="nav__link">Проекты</a></li>
                             <li><a href="../../index.html#skills" class="nav__link">Навыки</a></li>
+                            <li><a href="../../index.html#projects" class="nav__link">Проекты</a></li>
                             <li><a href="../../index.html#services" class="nav__link">Услуги</a></li>
+                            <li><a href="../../index.html#blog" class="nav__link">Блог</a></li>
                             <li><a href="../../index.html#contact" class="nav__link">Контакты</a></li>
                         </ul>
                     </nav>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                        <span class="theme-toggle__icon">�</span>
+                    <button class="theme-toggle" aria-label="Переключить тему">
+                        <span class="theme-toggle__icon">🌓</span>
                     </button>
                 </div>
             </div>
         </header>
 
-        <main class="main" style="padding-top: 120px;">
+        <main class="main">
             <article class="article">
                 <div class="container">
                     <nav class="breadcrumb">
                         <a href="../../index.html">Главная</a> → 
+                        <a href="../">Блог</a> → 
                         <span>Топ-5 способов интеграции 1С</span>
                     </nav>
                     
@@ -238,7 +189,8 @@
                     </blockquote>
 
                     <h3>📊 Пример запроса:</h3>
-                    <pre><code class="language-http">GET /demodb/odata/standard.odata/Catalog_Товары?$format=json&$top=10</code></pre>
+                    <pre><code class="language-http">GET /demodb/odata/standard.odata/Catalog_Товары?$format=json&$top=10
+Authorization: Basic base64(username:password)</code></pre>
 
                     <h2>2. SOAP веб-сервисы: надежность корпоративных решений</h2>
                     
@@ -556,6 +508,10 @@ HAVING SUM(reg._Fld2301) > 0</code></pre>
 
                     <p>Правильный выбор метода интеграции сэкономит месяцы разработки и годы поддержки системы. Экспериментируйте с разными подходами, но всегда держите в уме конечную цель — создание надежной и производительной системы обмена данными.</p>
 
+                    <div class="article__cta">
+                        <h3>💬 Какой способ интеграции используете вы? Поделитесь опытом в комментариях!</h3>
+                    </div>
+
                     <h3>📊 Полезные ссылки:</h3>
                     <ul>
                         <li><a href="https://its.1c.ru/db/intgr83/content/47/hdoc" target="_blank" rel="noopener">Документация по OData в 1С</a></li>
@@ -572,19 +528,31 @@ HAVING SUM(reg._Fld2301) > 0</code></pre>
                         <div class="share-buttons">
                             <a href="https://t.me/share/url?url=https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/&text=Топ-5 способов интеграции 1С" 
                                class="share-btn share-btn--telegram" target="_blank" rel="noopener">
-                                <span class="share-btn__icon">📱</span>
-                                <span class="share-btn__text">Telegram</span>
+                                Telegram
                             </a>
                             <a href="https://vk.com/share.php?url=https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/" 
                                class="share-btn share-btn--vk" target="_blank" rel="noopener">
-                                <span class="share-btn__icon">🌐</span>
-                                <span class="share-btn__text">VKontakte</span>
+                                VKontakte
                             </a>
                             <a href="https://wa.me/?text=Топ-5 способов интеграции 1С https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/" 
                                class="share-btn share-btn--whatsapp" target="_blank" rel="noopener">
-                                <span class="share-btn__icon">💬</span>
-                                <span class="share-btn__text">WhatsApp</span>
+                                WhatsApp
                             </a>
+                        </div>
+                    </div>
+                    
+                    <div class="article__author">
+                        <div class="author-card">
+                            <img src="../../photo_2022-07-26_20-37-26.jpg" alt="Хлебников Сергей Юрьевич" class="author-card__avatar">
+                            <div class="author-card__info">
+                                <h4 class="author-card__name">Хлебников Сергей Юрьевич</h4>
+                                <p class="author-card__title">Ведущий программист 1С</p>
+                                <p class="author-card__experience">Опыт работы: 10+ лет</p>
+                                <div class="author-card__contacts">
+                                    <a href="https://t.me/skhlebnikov" class="author-card__contact" target="_blank" rel="noopener">Telegram</a>
+                                    <a href="mailto:info@skhlebnikov.ru" class="author-card__contact">Email</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -609,30 +577,6 @@ HAVING SUM(reg._Fld2301) > 0</code></pre>
     <script src="../../app.js"></script>
     <script src="../../social-share.js"></script>
     
-    <!-- Theme Toggle Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = themeToggle.querySelector('.theme-toggle__icon');
-            
-            function updateThemeIcon(theme) {
-                themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
-            }
-            
-            // Set initial icon
-            updateThemeIcon(document.documentElement.getAttribute('data-theme'));
-            
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-            });
-        });
-    </script>
-    
     <!-- Prism.js для подсветки синтаксиса -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
@@ -654,11 +598,5 @@ HAVING SUM(reg._Fld2301) > 0</code></pre>
             'punctuation': /[{}[\];(),.:]/
         };
     </script>
-
-    <!-- Кнопка "Наверх" -->
-    <button class="scroll-to-top" id="scrollToTop" aria-label="Наверх">
-    </button>
-
-    <script src="../article.js"></script>
 </body>
 </html>

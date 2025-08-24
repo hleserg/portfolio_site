@@ -55,6 +55,24 @@
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
+    
+    <!-- Статьи блога -->
+    <url>
+        <loc>https://skhlebnikov.ru/blog/top-5-sposobov-integracii-1c/</loc>
+        <lastmod>2025-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <news:news>
+            <news:publication>
+                <news:name>Блог Сергея Хлебникова</news:name>
+                <news:language>ru</news:language>
+            </news:publication>
+            <news:publication_date>2025-08-24T20:00:00+03:00</news:publication_date>
+            <news:title>Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД</news:title>
+            <news:keywords>1С интеграция, REST API, SOAP, COM соединения, интеграция систем</news:keywords>
+        </news:news>
+    </url>
+    
     <!-- SEO файлы -->
     <url>
         <loc>https://skhlebnikov.ru/robots.txt</loc>
