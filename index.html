@@ -334,6 +334,12 @@
             {
               "@type": "ListItem",
               "position": 7,
+              "name": "Блог",
+              "item": "https://skhlebnikov.ru/#blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 8,
               "name": "Контакты",
               "item": "https://skhlebnikov.ru/#contact"
             }
@@ -471,6 +477,46 @@
     }
     </script>
     
+    <!-- Blog JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "@id": "https://skhlebnikov.ru/#blog",
+      "url": "https://skhlebnikov.ru/#blog",
+      "name": "Блог программиста 1С - Сергей Хлебников",
+      "description": "Статьи о разработке на платформе 1С, интеграции с ФГИС Меркурий, мобильных приложениях ТСД и лучших практиках программирования",
+      "author": {
+        "@id": "https://skhlebnikov.ru/#person"
+      },
+      "publisher": {
+        "@id": "https://skhlebnikov.ru/#person"
+      },
+      "inLanguage": "ru-RU",
+      "keywords": ["1С:Предприятие", "ФГИС Меркурий", "ТСД", "программирование", "интеграция", "автоматизация"],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "1С:Предприятие",
+          "description": "Платформа для автоматизации бизнеса"
+        },
+        {
+          "@type": "Thing",
+          "name": "ФГИС Меркурий",
+          "description": "Федеральная государственная информационная система прослеживания товаров"
+        },
+        {
+          "@type": "Thing",
+          "name": "ТСД",
+          "description": "Терминалы сбора данных для складского учета"
+        }
+      ],
+      "isPartOf": {
+        "@id": "https://skhlebnikov.ru/#website"
+      }
+    }
+    </script>
+    
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -492,6 +538,9 @@
     
     <!-- Social Share functionality -->
     <script src="social-share.js" defer></script>
+    
+    <!-- Blog functionality -->
+    <script src="blog-manager-simple.js" defer></script>
     
     <!-- Критичный CSS для предотвращения мерцания -->
     <style>
@@ -522,8 +571,14 @@
     <header class="header">
         <div class="container">
             <div class="header__content">
-                <div class="logo">
-                    <span class="logo__text">С.Ю.Х.</span>
+                <div class="header__left">
+                    <div class="logo">
+                        <span class="logo__text">С.Ю.Х.</span>
+                    </div>
+                    <a href="#blog" class="blog-button">
+                        <span class="blog-button__icon">📝</span>
+                        <span class="blog-button__text">Блог</span>
+                    </a>
                 </div>
                 <nav class="nav">
                     <ul class="nav__list">
@@ -536,7 +591,7 @@
                     </ul>
                 </nav>
                 <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-                    <span class="theme-toggle__icon">☀️</span>
+                    <span class="theme-toggle__icon">🌙</span>
                 </button>
             </div>
         </div>
@@ -1140,6 +1195,38 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <h2 class="section__title">Блог</h2>
+            <div class="blog__intro">
+                <p>Делюсь опытом разработки на платформе 1С, лучшими практиками и решениями реальных задач</p>
+            </div>
+            <div id="blog-articles" class="blog__articles">
+                <!-- Статьи загружаются динамически -->
+                <div class="blog__loading">
+                    <div class="blog__loading-icon">⏳</div>
+                    <h3>Загрузка статей блога...</h3>
+                    <p>Если статьи не загружаются, убедитесь что:</p>
+                    <ul class="blog__loading-tips">
+                        <li>📡 Используется HTTP сервер (не file://)</li>
+                        <li>🔄 JavaScript включен в браузере</li>
+                        <li>🌐 Есть доступ к файлам статей</li>
+                    </ul>
+                </div>
+                <noscript>
+                    <div class="blog__noscript">
+                        <h3>⚠️ JavaScript отключен</h3>
+                        <p>Для работы блога требуется включить JavaScript в браузере.</p>
+                    </div>
+                </noscript>
+            </div>
+            <div id="blog-pagination" class="blog__pagination">
+                <!-- Пагинация загружается динамически -->
             </div>
         </div>
     </section>

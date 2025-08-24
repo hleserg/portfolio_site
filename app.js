@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // 🐛 DEBUG: Точка останова для отладки
+    console.log('🚀 Сайт загружается...');
+    debugger; // Точка останова для отладки в DevTools
+    
     // Функция для динамической настройки отступа под заголовок
     function adjustHeaderOffset() {
+        console.log('⚙️ Настройка отступа заголовка...');
         const header = document.querySelector('.header');
         const hero = document.querySelector('.hero');
         
@@ -11,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const extraOffset = isMobile ? 59 : 30; // Дополнительный отступ (было 89 и 45)
             const totalPadding = headerHeight + extraOffset;
             
+            console.log(`📱 Mobile: ${isMobile}, Header: ${headerHeight}px, Total: ${totalPadding}px`);
             hero.style.paddingTop = totalPadding + 'px';
         }
     }
@@ -91,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.documentElement.setAttribute('data-color-scheme', theme);
         document.body.setAttribute('data-theme', theme);
-        themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+        themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
         
         // Update meta theme-color for mobile browsers
         let metaThemeColor = document.querySelector('meta[name=theme-color]');
@@ -119,9 +125,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add theme-specific console styling
         if (theme === 'dark') {
-            console.log('%c🌙 Темная тема активирована в синих тонах', 'color: #32b8c6; font-weight: bold; font-size: 14px;');
+            console.log('%c☀️ Темная тема активирована (показывается солнце для переключения на светлую)', 'color: #32b8c6; font-weight: bold; font-size: 14px;');
         } else {
-            console.log('%c☀️ Светлая тема активирована', 'color: #21808d; font-weight: bold; font-size: 14px;');
+            console.log('%c🌙 Светлая тема активирована (показывается луна для переключения на темную)', 'color: #21808d; font-weight: bold; font-size: 14px;');
         }
     }
     
@@ -702,7 +708,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('🔧 Специализация: интеграции, мобильные решения, автоматизация');
     console.log('🌓 Переключение тем: клик по кнопке или Ctrl/Cmd + T');
     console.log('🌓 Автоматическое определение темы системы по умолчанию');
-    console.log('🌙 Темная тема переработана в синих тонах');
+    console.log('🔄 Иконки темы: луна для светлой темы, солнце для темной');
     console.log('📧 Email: автоматическое открытие формы письма');
     console.log('📱 Телефон: автоматический набор на мобильных, копирование на десктопе');
     console.log('💬 Telegram: прямая ссылка на @skhlebnikov');

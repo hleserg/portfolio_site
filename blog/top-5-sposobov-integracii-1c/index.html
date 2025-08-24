@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Рассматриваем 5 основных способов интеграции 1С: REST API, SOAP, XML/JSON файлы, COM-соединения и прямой доступ к БД. Практические рекомендации и сравнение методов.">
+    <meta name="keywords" content="1С интеграция, REST API 1С, SOAP веб-сервисы, COM соединения, интеграция систем, обмен данными 1С">
+    <meta name="author" content="Хлебников Сергей Юрьевич">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД">
+    <meta property="og:description" content="Подробное сравнение методов интеграции 1С с внешними системами. Практические рекомендации по выбору оптимального способа интеграции.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sergeykhlebnikov.ru/blog/top-5-sposobov-integracii-1c/">
+    <meta property="og:image" content="https://sergeykhlebnikov.ru/images/og-integraciya-1c.jpg">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="Хлебников Сергей Юрьевич">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД">
+    <meta name="twitter:description" content="Подробное сравнение методов интеграции 1С с внешними системами. Практические рекомендации по выбору оптимального способа интеграции.">
+    <meta name="twitter:image" content="https://sergeykhlebnikov.ru/images/og-integraciya-1c.jpg">
+    
+    <title>Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД | Хлебников Сергей</title>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sergeykhlebnikov.ru/blog/top-5-sposobov-integracii-1c/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД",
+        "description": "Рассматриваем 5 основных способов интеграции 1С: REST API, SOAP, XML/JSON файлы, COM-соединения и прямой доступ к БД. Практические рекомендации и сравнение методов.",
+        "author": {
+            "@type": "Person",
+            "name": "Хлебников Сергей Юрьевич",
+            "url": "https://sergeykhlebnikov.ru",
+            "sameAs": [
+                "https://t.me/SergeyKhlebnikov_1C",
+                "https://github.com/hleserg"
+            ]
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Хлебников Сергей Юрьевич",
+            "url": "https://sergeykhlebnikov.ru"
+        },
+        "image": "https://sergeykhlebnikov.ru/images/og-integraciya-1c.jpg",
+        "datePublished": "2025-08-24T20:00:00+03:00",
+        "dateModified": "2025-08-24T20:00:00+03:00",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://sergeykhlebnikov.ru/blog/top-5-sposobov-integracii-1c/"
+        },
+        "keywords": ["1С интеграция", "REST API", "SOAP", "COM соединения", "интеграция систем"],
+        "articleSection": "Разработка",
+        "wordCount": 2500
+    }
+    </script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../style.css">
+    
+    <!-- Prism.js CSS для подсветки синтаксиса -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" id="prism-dark-theme" disabled>
+    
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__left">
+                    <div class="header__logo">
+                        <a href="../../index.html" class="header__logo-link">
+                            <span class="header__logo-text">Хлебников Сергей</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <nav class="header__nav">
+                    <div class="header__nav-links">
+                        <a href="../../index.html" class="header__nav-link">Главная</a>
+                        <a href="../../index.html#about" class="header__nav-link">Обо мне</a>
+                        <a href="../../index.html#blog" class="header__nav-link">Блог</a>
+                        <a href="../../index.html#projects" class="header__nav-link">Проекты</a>
+                        <a href="../../index.html#contact" class="header__nav-link">Контакты</a>
+                    </div>
+                    
+                    <div class="header__controls">
+                        <button class="theme-toggle" aria-label="Переключить тему">
+                            <span class="theme-toggle__icon"></span>
+                        </button>
+                        
+                        <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                            <span class="mobile-menu-toggle__line"></span>
+                            <span class="mobile-menu-toggle__line"></span>
+                            <span class="mobile-menu-toggle__line"></span>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <article class="article">
+            <div class="container">
+                <div class="article__header">
+                    <nav class="breadcrumbs">
+                        <a href="../../index.html" class="breadcrumbs__link">Главная</a>
+                        <span class="breadcrumbs__separator">→</span>
+                        <a href="../../index.html#blog" class="breadcrumbs__link">Блог</a>
+                        <span class="breadcrumbs__separator">→</span>
+                        <span class="breadcrumbs__current">Топ-5 способов интеграции 1С</span>
+                    </nav>
+                    
+                    <h1 class="article__title">Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД</h1>
+                    
+                    <div class="article__meta">
+                        <div class="article__meta-item">
+                            <span class="article__meta-label">Дата публикации:</span>
+                            <time datetime="2025-08-24" class="article__meta-value">24 августа 2025</time>
+                        </div>
+                        <div class="article__meta-item">
+                            <span class="article__meta-label">Время чтения:</span>
+                            <span class="article__meta-value">25 минут</span>
+                        </div>
+                        <div class="article__meta-item">
+                            <span class="article__meta-label">Автор:</span>
+                            <span class="article__meta-value">Хлебников Сергей</span>
+                        </div>
+                    </div>
+                    
+                    <div class="article__tags">
+                        <span class="article__tag">1С интеграция</span>
+                        <span class="article__tag">REST API</span>
+                        <span class="article__tag">SOAP</span>
+                        <span class="article__tag">COM соединения</span>
+                        <span class="article__tag">Интеграция систем</span>
+                    </div>
+                </div>
+
+                <div class="article__content">
+                    <p class="article__intro">Интеграция систем — это всегда выбор между простотой, производительностью и надежностью. Если вы когда-либо сталкивались с необходимостью связать 1С с другими системами, то знаете, что вариантов масса, но далеко не все из них одинаково эффективны. Рассмотрим пять основных способов интеграции, каждый из которых имеет свои достоинства и области применения.</p>
+
+                    <h2>1. REST API: современный стандарт интеграции</h2>
+                    
+                    <p>REST API стал де-факто стандартом для современных интеграций. Платформа 1С может автоматически формировать REST интерфейс для всего прикладного решения, используя протокол OData версии 3.0.</p>
+
+                    <h3>Достоинства:</h3>
+                    <ul>
+                        <li><strong>Автоматическое формирование интерфейса</strong> — платформа сама создает REST интерфейс без дополнительных настроек</li>
+                        <li><strong>Универсальность</strong> — работает через стандартные HTTP запросы, поддерживает форматы XML и JSON</li>
+                        <li><strong>Кроссплатформенность</strong> — может использоваться любыми системами, поддерживающими HTTP</li>
+                        <li><strong>Быстродействие</strong> — более компактный формат JSON обеспечивает быстрее сериализацию и десериализацию по сравнению с XML</li>
+                    </ul>
+
+                    <h3>Кейсы применения:</h3>
+                    <ul>
+                        <li><strong>Интеграция с интернет-магазинами</strong> — автоматическая загрузка заказов, синхронизация остатков товаров</li>
+                        <li><strong>Мобильные приложения</strong> — создание API для мобильных клиентов</li>
+                        <li><strong>CRM-системы</strong> — обмен данными о клиентах и сделках в реальном времени</li>
+                        <li><strong>Внешние сервисы</strong> — интеграция с платежными системами, службами доставки</li>
+                    </ul>
+
+                    <p>Из собственного опыта: REST API идеально подходит для создания интерфейсов интернет-магазинов. Однажды настроив REST сервис в 1С, вы получаете готовый API, который может использовать любой веб-разработчик.</p>
+
+                    <h2>2. SOAP веб-сервисы: надежность корпоративных решений</h2>
+                    
+                    <p>SOAP (Simple Object Access Protocol) — это протокол для обмена структурированными сообщениями в формате XML. В 1С SOAP используется для создания более формализованных интеграций.</p>
+
+                    <h3>Достоинства:</h3>
+                    <ul>
+                        <li><strong>Строгая типизация</strong> — четкое определение структуры данных и методов</li>
+                        <li><strong>Встроенная безопасность</strong> — поддержка стандартов WS-Security</li>
+                        <li><strong>Надежность</strong> — встроенные механизмы обработки ошибок и подтверждения доставки</li>
+                        <li><strong>Корпоративная совместимость</strong> — широкая поддержка в корпоративных системах</li>
+                    </ul>
+
+                    <h3>Кейсы применения:</h3>
+                    <ul>
+                        <li><strong>Банковские системы</strong> — обмен данными с банк-клиентами, получение выписок</li>
+                        <li><strong>ERP интеграции</strong> — взаимодействие с крупными корпоративными системами</li>
+                        <li><strong>Государственные системы</strong> — интеграция с системами ФНС, ПФР</li>
+                        <li><strong>B2B интеграции</strong> — обмен данными между предприятиями</li>
+                    </ul>
+
+                    <p>SOAP незаменим там, где нужна максимальная формализация и контроль процесса обмена данными. Я использовал его для интеграции с банковскими API — там строгость протокола является необходимостью.</p>
+
+                    <h2>3. Обмен через XML/JSON файлы: простота и универсальность</h2>
+                    
+                    <p>Файловый обмен остается одним из самых надежных способов интеграции. 1С поддерживает как традиционный XML, так и современный JSON формат.</p>
+
+                    <h3>Достоинства XML:</h3>
+                    <ul>
+                        <li><strong>XDTO пакеты</strong> — мощный механизм для работы со сложными структурами данных</li>
+                        <li><strong>Валидация схем</strong> — возможность проверки структуры данных по XSD схемам</li>
+                        <li><strong>Последовательная обработка</strong> — возможность работы с большими файлами без загрузки в память</li>
+                        <li><strong>Полная автономность</strong> — не требует постоянного соединения между системами</li>
+                    </ul>
+
+                    <h3>Достоинства JSON:</h3>
+                    <ul>
+                        <li><strong>Компактность</strong> — JSON файлы занимают меньше места, чем XML</li>
+                        <li><strong>Скорость</strong> — быстрее парсится и генерируется</li>
+                        <li><strong>Веб-ориентированность</strong> — нативная поддержка в браузерах и веб-приложениях</li>
+                        <li><strong>Простота</strong> — более читаемый формат для разработчиков</li>
+                    </ul>
+
+                    <h3>Кейсы применения:</h3>
+                    <ul>
+                        <li><strong>Массовая загрузка данных</strong> — импорт прайс-листов, каталогов товаров</li>
+                        <li><strong>Резервное копирование настроек</strong> — экспорт/импорт конфигураций</li>
+                        <li><strong>Отложенная синхронизация</strong> — обмен данными по расписанию</li>
+                        <li><strong>Интеграция с системами без API</strong> — файловый обмен через FTP или файловые каталоги</li>
+                    </ul>
+
+                    <h2>4. COM-соединения: прямое взаимодействие в Windows</h2>
+                    
+                    <p>COM-соединение позволяет одной базе 1С напрямую подключаться к другой и работать с её данными. Это мощный механизм для интеграции в рамках экосистемы 1С.</p>
+
+                    <h3>Достоинства:</h3>
+                    <ul>
+                        <li><strong>Высокая скорость</strong> — прямое обращение к объектам без сетевых задержек</li>
+                        <li><strong>Программный доступ</strong> — возможность использовать всю объектную модель 1С</li>
+                        <li><strong>Транзакционность</strong> — поддержка атомарных операций</li>
+                        <li><strong>Минимальные накладные расходы</strong> — не требует промежуточных форматов данных</li>
+                    </ul>
+
+                    <h3>Недостатки:</h3>
+                    <ul>
+                        <li><strong>Потребление лицензий</strong> — каждое COM-соединение использует лицензию</li>
+                        <li><strong>Время инициализации</strong> — подключение может занимать несколько секунд</li>
+                        <li><strong>Платформенная зависимость</strong> — работает только в Windows</li>
+                        <li><strong>Ограничения безопасности</strong> — требует настройки COM компонентов</li>
+                    </ul>
+
+                    <h3>Кейсы применения:</h3>
+                    <ul>
+                        <li><strong>Консолидация данных</strong> — объединение информации из нескольких баз 1С</li>
+                        <li><strong>Миграция данных</strong> — перенос информации между конфигурациями</li>
+                        <li><strong>Автоматизация обслуживания</strong> — создание утилит для администрирования</li>
+                        <li><strong>Интеграция с Office</strong> — обмен данными с Excel, Word через COM</li>
+                    </ul>
+
+                    <h2>5. Прямой доступ к базе данных: максимальная производительность</h2>
+                    
+                    <p>Прямой доступ к базе данных через ODBC или встроенные драйверы обеспечивает максимальную скорость работы с данными.</p>
+
+                    <h3>Достоинства:</h3>
+                    <ul>
+                        <li><strong>Максимальная скорость</strong> — прямые SQL запросы без промежуточных слоев</li>
+                        <li><strong>Гибкость запросов</strong> — возможность использовать все возможности SQL</li>
+                        <li><strong>Минимальные накладные расходы</strong> — отсутствие сериализации/десериализации</li>
+                        <li><strong>Работа с большими объемами</strong> — эффективная обработка миллионов записей</li>
+                    </ul>
+
+                    <h3>Недостатки:</h3>
+                    <ul>
+                        <li><strong>Нарушение целостности</strong> — риск повреждения данных при неправильных операциях</li>
+                        <li><strong>Сложность поддержки</strong> — требует знания структуры БД 1С</li>
+                        <li><strong>Зависимость от СУБД</strong> — различия в диалектах SQL для разных баз</li>
+                        <li><strong>Ограниченная переносимость</strong> — привязка к конкретной СУБД</li>
+                    </ul>
+
+                    <h3>Кейсы применения:</h3>
+                    <ul>
+                        <li><strong>Аналитические отчеты</strong> — построение сложных выборок для BI систем</li>
+                        <li><strong>Массовые операции</strong> — обновление больших объемов данных</li>
+                        <li><strong>ETL процессы</strong> — извлечение данных для хранилищ данных</li>
+                        <li><strong>Мониторинг производительности</strong> — прямой анализ статистики работы системы</li>
+                    </ul>
+
+                    <p>Использую прямой доступ к БД для создания дашбордов в Power BI — это позволяет получать данные практически без задержек.</p>
+
+                    <h2>Рекомендации по выбору метода интеграции</h2>
+                    
+                    <p>При выборе способа интеграции учитывайте следующие критерии:</p>
+
+                    <div class="table-responsive">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Критерий</th>
+                                    <th>REST API</th>
+                                    <th>SOAP</th>
+                                    <th>XML/JSON</th>
+                                    <th>COM</th>
+                                    <th>Прямой доступ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Простота реализации</strong></td>
+                                    <td>Высокая</td>
+                                    <td>Средняя</td>
+                                    <td>Высокая</td>
+                                    <td>Низкая</td>
+                                    <td>Низкая</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Производительность</strong></td>
+                                    <td>Средняя</td>
+                                    <td>Средняя</td>
+                                    <td>Низкая</td>
+                                    <td>Высокая</td>
+                                    <td>Максимальная</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Надежность</strong></td>
+                                    <td>Высокая</td>
+                                    <td>Максимальная</td>
+                                    <td>Средняя</td>
+                                    <td>Высокая</td>
+                                    <td>Средняя</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Кроссплатформенность</strong></td>
+                                    <td>Да</td>
+                                    <td>Да</td>
+                                    <td>Да</td>
+                                    <td>Нет</td>
+                                    <td>Ограничена</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Требования к ресурсам</strong></td>
+                                    <td>Средние</td>
+                                    <td>Высокие</td>
+                                    <td>Низкие</td>
+                                    <td>Высокие</td>
+                                    <td>Минимальные</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Практические рекомендации:</h3>
+                    
+                    <p><strong>Для веб-интеграций</strong> выбирайте REST API — он обеспечивает отличный баланс между простотой и функциональностью.</p>
+                    
+                    <p><strong>Для корпоративных систем</strong> используйте SOAP — его формализованность окупится надежностью в долгосрочной перспективе.</p>
+                    
+                    <p><strong>Для массовых операций</strong> применяйте файловый обмен — он гарантирует стабильность при больших объемах данных.</p>
+                    
+                    <p><strong>Для тесной интеграции в экосистеме 1С</strong> COM-соединения незаменимы, несмотря на сложность настройки.</p>
+                    
+                    <p><strong>Для критичных к производительности задач</strong> прямой доступ к БД даст максимальную скорость, но потребует экспертизы.</p>
+
+                    <div class="article__conclusion">
+                        <p>Интеграция 1С — это не просто техническая задача, а стратегическое решение, влияющее на эффективность всей ИТ-инфраструктуры компании. Правильный выбор метода интеграции сэкономит месяцы разработки и годы поддержки системы. Экспериментируйте с разными подходами, но всегда держите в уме конечную цель — создание надежной и производительной системы обмена данными.</p>
+                    </div>
+                </div>
+
+                <div class="article__footer">
+                    <div class="article__share">
+                        <h3>Поделиться статьей:</h3>
+                        <div class="share-buttons">
+                            <a href="https://t.me/share/url?url=https://sergeykhlebnikov.ru/blog/top-5-sposobov-integracii-1c/&text=Топ-5 способов интеграции 1С" 
+                               class="share-btn share-btn--telegram" target="_blank" rel="noopener">
+                                Telegram
+                            </a>
+                            <a href="https://vk.com/share.php?url=https://sergeykhlebnikov.ru/blog/top-5-sposobov-integracii-1c/" 
+                               class="share-btn share-btn--vk" target="_blank" rel="noopener">
+                                VKontakte
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://sergeykhlebnikov.ru/blog/top-5-sposobov-integracii-1c/" 
+                               class="share-btn share-btn--linkedin" target="_blank" rel="noopener">
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="article__navigation">
+                        <a href="../../index.html#blog" class="btn btn--secondary">← Вернуться к блогу</a>
+                        <a href="../../index.html#contact" class="btn btn--primary">Обсудить проект →</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__info">
+                    <h3 class="footer__title">Хлебников Сергей Юрьевич</h3>
+                    <p class="footer__description">
+                        Разработчик и консультант по 1С:Предприятие с опытом более 10 лет. 
+                        Специализируюсь на автоматизации бизнес-процессов и интеграции систем.
+                    </p>
+                    <div class="footer__contacts">
+                        <a href="tel:+79999999999" class="footer__contact">+7 (999) 999-99-99</a>
+                        <a href="mailto:info@sergeykhlebnikov.ru" class="footer__contact">info@sergeykhlebnikov.ru</a>
+                    </div>
+                </div>
+                
+                <div class="footer__nav-section">
+                    <h3 class="footer__title">Навигация</h3>
+                    <nav class="footer__nav">
+                        <a href="../../index.html" class="footer__link">Главная</a>
+                        <a href="../../index.html#blog" class="footer__link">Блог</a>
+                        <a href="../../index.html#projects" class="footer__link">Проекты</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p class="footer__copyright">
+                    © 2025 Хлебников Сергей Юрьевич. Все права защищены.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Prism.js для подсветки синтаксиса -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <!-- Кастомная подсветка для 1С -->
+    <script>
+        // Добавляем язык 1С в Prism
+        Prism.languages['1c'] = {
+            'comment': [
+                /\/\/.*$/m,
+                /\/\*[\s\S]*?\*\//
+            ],
+            'string': {
+                pattern: /"(?:[^"\\]|\\.)*"/,
+                greedy: true
+            },
+            'keyword': /\b(?:Если|ИначеЕсли|Иначе|КонецЕсли|Пока|Для|Каждого|Из|Цикл|КонецЦикла|Процедура|КонецПроцедуры|Функция|КонецФункции|Возврат|Прервать|Продолжить|И|Или|Не|Попытка|Исключение|ВызватьИсключение|КонецПопытки|Новый|Истина|Ложь|Неопределено|NULL|Экспорт|Знач|Перем|Константы|Справочники|Документы|РегистрыСведений|РегистрыНакопления|ПланыВидовХарактеристик|ПланыСчетов|ПланыВидовРасчета|БизнесПроцессы|Задачи|ВнешниеИсточникиДанных|КритерииОтбора|ТабличныйДокумент|ТекстовыйДокумент|ДвоичныеДанные|ТаблицаЗначений|ДеревоЗначений|СписокЗначений|Структура|Соответствие|Массив|ФиксированныйМассив|ФиксированнаяСтруктура|ФиксированноеСоответствие|УникальныйИдентификатор|ХранилищеЗначений|ДатаВремя|Дата|Время|Строка|Число|Булево|Тип|ОписаниеТипов|МенеджерВременныхТаблиц|Запрос|ПостроительЗапроса|ПостроительОтчета|ТабличныйДокумент|ГрафическаяСхема|Картинка|СхемаЗапроса|КомпоновщикНастроекКомпоновкиДанных|КомпоновщикМакетаКомпоновкиДанных|ПроцессорКомпоновкиДанных|ПроцессорВыводаРезультатаКомпоновкиДанныхВТабличныйДокумент|СистемаКомпоновкиДанных|HTTPСоединение|HTTPЗапрос|HTTPОтвет|InternetProxy|ЗащищенноеСоединениеOpenSSL|XMLЧтение|XMLЗапись|ЧтениеXML|ЗаписьXML|ЧтениеJSON|ЗаписьJSON|ЧтениеZipФайла|ЗаписьZipФайла|ЧтениеТекста|ЗаписьТекста|Файл|НайтиФайлы|СоздатьКаталог|УдалитьФайлы|КопироватьФайл|ПереместитьФайл|РазделитьФайл|ОбъединитьФайлы|ПолучитьИмяВременногоФайла)\b/i,
+            'function': /\b[А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*(?=\s*\()/,
+            'number': /\b(?:0x[\da-f]+|\d+\.?\d*(?:e[+-]?\d+)?)\b/i,
+            'operator': /[+\-*\/=<>!&|^~%]/,
+            'punctuation': /[{}[\];(),.:]/
+        };
+        
+        // Устанавливаем алиасы
+        Prism.languages['1c-enterprise'] = Prism.languages['1c'];
+        Prism.languages['bsl'] = Prism.languages['1c'];
+        
+        // Функция переключения темы для Prism
+        function togglePrismTheme() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const lightTheme = document.querySelector('link[href*="prism.min.css"]');
+            const darkTheme = document.querySelector('#prism-dark-theme');
+            
+            if (isDark) {
+                lightTheme.disabled = true;
+                darkTheme.disabled = false;
+            } else {
+                lightTheme.disabled = false;
+                darkTheme.disabled = true;
+            }
+        }
+        
+        // Слушаем изменения темы
+        const observer = new MutationObserver(togglePrismTheme);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
+        
+        // Устанавливаем тему при загрузке
+        document.addEventListener('DOMContentLoaded', togglePrismTheme);
+    </script>
+
+    <script src="../../app.js"></script>
+</body>
+</html>

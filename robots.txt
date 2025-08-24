@@ -19,6 +19,10 @@ Allow: /favicon.ico
 Allow: /favicon.svg
 Allow: /image.png
 
+# Блог
+Allow: /blog/
+Allow: /blog/articles/
+
 # SEO файлы
 Allow: /robots.txt
 Allow: /social-profiles.txt
