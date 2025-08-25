@@ -33,8 +33,6 @@ section {
 
 /* Ленивая загрузка изображений для улучшения LCP */
 img {
-  loading: lazy;
-  decoding: async;
   height: auto;
   max-width: 100%;
 }
@@ -57,7 +55,6 @@ img {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   aspect-ratio: 1/1; /* Предотвращение скачков макета */
-}
 }
 
 body {
