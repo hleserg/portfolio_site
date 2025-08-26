@@ -66,15 +66,69 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализируем кнопку "Наверх"
     initScrollToTop();
 
-    // Функция для улучшения читабельности кода
+    // Функция для улучшения читабельности кода и добавления кнопки копирования
     function enhanceCodeBlocks() {
         const codeBlocks = document.querySelectorAll('pre code');
         
         codeBlocks.forEach(function(codeBlock) {
+            const preElement = codeBlock.parentElement;
+            
             // Добавляем номера строк для больших блоков кода
             const lines = codeBlock.textContent.split('\n');
             if (lines.length > 5) {
                 codeBlock.classList.add('with-line-numbers');
+            }
+            
+            // Добавляем кнопку копирования
+            if (!preElement.querySelector('.code-copy-btn')) {
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'code-copy-btn';
+                copyBtn.innerHTML = '📋';
+                copyBtn.setAttribute('aria-label', 'Скопировать код');
+                copyBtn.setAttribute('title', 'Скопировать в буфер обмена');
+                
+                // Обработчик клика
+                copyBtn.addEventListener('click', async function() {
+                    try {
+                        await navigator.clipboard.writeText(codeBlock.textContent);
+                        
+                        // Показываем успешное копирование
+                        copyBtn.innerHTML = '✅';
+                        copyBtn.classList.add('copied');
+                        
+                        // Возвращаем исходное состояние через 2 секунды
+                        setTimeout(() => {
+                            copyBtn.innerHTML = '📋';
+                            copyBtn.classList.remove('copied');
+                        }, 2000);
+                        
+                    } catch (err) {
+                        console.error('Ошибка копирования: ', err);
+                        
+                        // Fallback для старых браузеров
+                        const textArea = document.createElement('textarea');
+                        textArea.value = codeBlock.textContent;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        
+                        try {
+                            document.execCommand('copy');
+                            copyBtn.innerHTML = '✅';
+                            copyBtn.classList.add('copied');
+                            
+                            setTimeout(() => {
+                                copyBtn.innerHTML = '📋';
+                                copyBtn.classList.remove('copied');
+                            }, 2000);
+                        } catch (fallbackErr) {
+                            console.error('Fallback копирование также не работает: ', fallbackErr);
+                        }
+                        
+                        document.body.removeChild(textArea);
+                    }
+                });
+                
+                preElement.appendChild(copyBtn);
             }
         });
     }
