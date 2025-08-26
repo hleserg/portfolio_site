@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 🐛 DEBUG: Точка останова для отладки
     console.log('🚀 Сайт загружается...');
-    debugger; // Точка останова для отладки в DevTools
     
     // Функция для динамической настройки отступа под заголовок
     function adjustHeaderOffset() {
@@ -11,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (header && hero) {
             const headerHeight = header.offsetHeight;
-            // Добавляем дополнительный отступ для мобильных устройств (еще больше уменьшен)
+            // Добавляем дополнительный отступ для мобильных устройств
             const isMobile = window.innerWidth <= 768;
-            const extraOffset = isMobile ? 59 : 30; // Дополнительный отступ (было 89 и 45)
+            const extraOffset = isMobile ? 59 : 30;
             const totalPadding = headerHeight + extraOffset;
             
             console.log(`📱 Mobile: ${isMobile}, Header: ${headerHeight}px, Total: ${totalPadding}px`);
