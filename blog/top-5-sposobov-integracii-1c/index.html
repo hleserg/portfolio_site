@@ -608,24 +608,49 @@ HAVING SUM(reg._Fld2301) > 0</code></pre>
     <!-- Theme Toggle Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = themeToggle.querySelector('.theme-toggle__icon');
+            console.log('🎨 Дополнительная инициализация темы в статье...');
             
-            function updateThemeIcon(theme) {
-                themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            // Просто убеждаемся, что иконка синхронизирована (без вмешательства в основную логику)
+            function syncThemeIcon() {
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) {
+                    const themeIcon = themeToggle.querySelector('.theme-toggle__icon');
+                    if (themeIcon) {
+                        const currentTheme = document.documentElement.getAttribute('data-color-scheme') || 'light';
+                        const correctIcon = currentTheme === 'dark' ? '☀️' : '🌙';
+                        
+                        if (themeIcon.textContent !== correctIcon) {
+                            console.log(`🎨 Синхронизация иконки: ${currentTheme} -> ${correctIcon}`);
+                            themeIcon.textContent = correctIcon;
+                        }
+                    }
+                }
             }
             
-            // Set initial icon
-            updateThemeIcon(document.documentElement.getAttribute('data-theme'));
+            // Синхронизируем при загрузке
+            syncThemeIcon();
             
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
+            // Следим за изменениями темы только для синхронизации иконки
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && 
+                        (mutation.attributeName === 'data-color-scheme' || mutation.attributeName === 'data-theme')) {
+                        setTimeout(syncThemeIcon, 10); // Небольшая задержка для синхронизации
+                    }
+                });
             });
+            
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['data-color-scheme']
+            });
+            
+            observer.observe(document.body, {
+                attributes: true,
+                attributeFilter: ['data-theme']
+            });
+            
+            console.log('🎨 Наблюдатель синхронизации темы установлен');
         });
     </script>
     

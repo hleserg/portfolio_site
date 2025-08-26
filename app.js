@@ -52,6 +52,53 @@ document.addEventListener('DOMContentLoaded', function() {
     if (themeToggle) {
         const themeIcon = themeToggle.querySelector('.theme-toggle__icon');
         
+        // Function to set theme
+        function setTheme(theme) {
+            // Add loading state
+            if (themeToggle) {
+                themeToggle.classList.add('loading');
+            }
+            
+            document.documentElement.setAttribute('data-color-scheme', theme);
+            document.body.setAttribute('data-theme', theme);
+            if (themeIcon) {
+                themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+            }
+        
+            // Update meta theme-color for mobile browsers
+            let metaThemeColor = document.querySelector('meta[name=theme-color]');
+            if (!metaThemeColor) {
+                metaThemeColor = document.createElement('meta');
+                metaThemeColor.name = 'theme-color';
+                document.head.appendChild(metaThemeColor);
+            }
+            
+            // Set appropriate theme color based on current theme
+            const themeColor = theme === 'light' ? '#fcfcf9' : '#1f2121';
+            metaThemeColor.content = themeColor;
+            
+            // Add theme change animation class
+            document.body.classList.add('theme-changing');
+            
+            // Remove loading state after animation
+            setTimeout(() => {
+                document.body.classList.remove('theme-changing');
+                if (themeToggle) {
+                    themeToggle.classList.remove('loading');
+                }
+            }, 300);
+            
+            // Log theme change
+            console.log(`🌓 Тема изменена на: ${theme === 'light' ? 'светлую' : 'темную'}`);
+            
+            // Add theme-specific console styling
+            if (theme === 'dark') {
+                console.log('%c☀️ Темная тема активирована (показывается солнце для переключения на светлую)', 'color: #32b8c6; font-weight: bold; font-size: 14px;');
+            } else {
+                console.log('%c🌙 Светлая тема активирована (показывается луна для переключения на темную)', 'color: #21808d; font-weight: bold; font-size: 14px;');
+            }
+        }
+        
         // Function to get system theme preference
         function getSystemTheme() {
             return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -77,8 +124,12 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             
+            console.log('🎨 Клик по кнопке смены темы');
+            
             const currentTheme = document.documentElement.getAttribute('data-color-scheme') || 'light';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            console.log('🎨 Переключение темы:', currentTheme, '->', newTheme);
             
             setTheme(newTheme);
             localStorage.setItem('theme', newTheme);
@@ -93,48 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 200);
         });
         
-        function setTheme(theme) {
-            // Add loading state
-            themeToggle.classList.add('loading');
-            
-            document.documentElement.setAttribute('data-color-scheme', theme);
-            document.body.setAttribute('data-theme', theme);
-            if (themeIcon) {
-                themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
-            }
-        
-        // Update meta theme-color for mobile browsers
-        let metaThemeColor = document.querySelector('meta[name=theme-color]');
-        if (!metaThemeColor) {
-            metaThemeColor = document.createElement('meta');
-            metaThemeColor.name = 'theme-color';
-            document.head.appendChild(metaThemeColor);
-        }
-        
-        // Set appropriate theme color based on current theme
-        const themeColor = theme === 'light' ? '#fcfcf9' : '#1f2121';
-        metaThemeColor.content = themeColor;
-        
-        // Add theme change animation class
-        document.body.classList.add('theme-changing');
-        
-        // Remove loading state after animation
-        setTimeout(() => {
-            document.body.classList.remove('theme-changing');
-            themeToggle.classList.remove('loading');
-        }, 300);
-        
-        // Log theme change
-        console.log(`🌓 Тема изменена на: ${theme === 'light' ? 'светлую' : 'темную'}`);
-        
-        // Add theme-specific console styling
-        if (theme === 'dark') {
-            console.log('%c☀️ Темная тема активирована (показывается солнце для переключения на светлую)', 'color: #32b8c6; font-weight: bold; font-size: 14px;');
-        } else {
-            console.log('%c🌙 Светлая тема активирована (показывается луна для переключения на темную)', 'color: #21808d; font-weight: bold; font-size: 14px;');
-        }
-    }
-    
     } // Закрытие блока if (themeToggle)
     
     // Smooth scrolling for navigation links

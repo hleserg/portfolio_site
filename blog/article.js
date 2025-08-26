@@ -1,35 +1,46 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📝 Статья загружена...');
 
-    // Theme management для статей
+    // Theme management для статей - упрощенная версия без конфликтов
     const themeToggle = document.getElementById('themeToggle');
     
     if (themeToggle) {
-        // Получаем сохранённую тему или определяем системную
-        const savedTheme = localStorage.getItem('theme') || 
-                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        console.log('🎨 article.js: Проверка синхронизации темы...');
         
-        // Применяем тему
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme);
-        
-        // Обработчик переключения темы
-        themeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
-        });
-        
-        // Обновление иконки темы
-        function updateThemeIcon(theme) {
+        // Функция для синхронизации иконки (не вмешиваемся в основную логику)
+        function syncThemeIcon() {
             const icon = themeToggle.querySelector('.theme-toggle__icon');
             if (icon) {
-                icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+                const currentTheme = document.documentElement.getAttribute('data-color-scheme') || 
+                                   document.body.getAttribute('data-theme') || 'light';
+                const correctIcon = currentTheme === 'dark' ? '☀️' : '🌙';
+                
+                if (icon.textContent !== correctIcon) {
+                    console.log('🎨 article.js: Синхронизация иконки:', currentTheme, '->', correctIcon);
+                    icon.textContent = correctIcon;
+                }
             }
         }
+        
+        // Проверяем синхронизацию при загрузке
+        setTimeout(syncThemeIcon, 100);
+        
+        // Только слушаем изменения для синхронизации (не создаем конфликты)
+        const observer = new MutationObserver(function() {
+            setTimeout(syncThemeIcon, 10);
+        });
+        
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-color-scheme']
+        });
+        
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
+        
+        console.log('🎨 article.js: Наблюдатель синхронизации установлен');
     }
 
     // Функциональность кнопки "Наверх"
