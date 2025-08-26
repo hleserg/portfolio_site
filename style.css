@@ -251,6 +251,14 @@ section, .container, .timeline__item, .about, .projects, .skills, .services, .co
   --space-20: 20px;
   --space-24: 24px;
   --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-72: 72px;
+  --space-80: 80px;
+  --space-96: 96px;
+  --space-128: 128px;
 
   /* Border Radius */
   --radius-sm: 6px;
@@ -2198,8 +2206,10 @@ body:not(.preload) .container {
 /* Article Layout */
 .article {
   padding: var(--space-16) 0;
-  max-width: 800px;
+  max-width: 700px; /* Уменьшили ширину с 800px до 700px */
   margin: 0 auto;
+  padding-left: var(--space-32); /* Увеличили отступы по бокам до 32px */
+  padding-right: var(--space-32);
 }
 
 .article__header {
@@ -2292,6 +2302,8 @@ body:not(.preload) .container {
 .article__content {
   line-height: 1.7;
   color: var(--color-text);
+  padding: 0 var(--space-16); /* Увеличили внутренние отступы до 16px */
+  max-width: 100%;
 }
 
 .article__content h2 {
@@ -2758,7 +2770,7 @@ body:not(.preload) .container {
   }
   
   .article {
-    padding: var(--space-8) 0;
+    padding: var(--space-8) var(--space-4); /* Добавили горизонтальные отступы для мобильных */
   }
 
   .article__title {
@@ -2769,14 +2781,14 @@ body:not(.preload) .container {
 
   .article__content {
     font-size: var(--font-size-sm);
-    padding: 0 var(--space-4);
+    padding: 0; /* Убираем дублирование отступов */
     line-height: 1.8;
   }
 
   .article__content p {
     margin-bottom: var(--space-6);
     line-height: 1.8;
-    padding: 0 var(--space-2);
+    padding: 0; /* Убираем лишние отступы */
   }
 
   .article__content ul,
@@ -4069,14 +4081,90 @@ body:not(.preload) .container {
 
 /* --- Blog Page Styles --- */
 
+/* Utility Classes */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb {
+  padding: var(--space-16) 0;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.breadcrumb__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-sm);
+}
+
+.breadcrumb__item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb__item:not(:last-child)::after {
+  content: '→';
+  margin-left: var(--space-8);
+  color: var(--color-text-secondary);
+  font-size: var(--font-xs);
+}
+
+.breadcrumb__link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+}
+
+.breadcrumb__link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.breadcrumb__current {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
 /* Blog Hero Section */
 .blog-hero {
   padding: var(--space-64) 0 var(--space-48) 0;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  color: white;
+  color: white; /* Белый цвет по умолчанию */
   text-align: center;
   position: relative;
   overflow: hidden;
+}
+
+/* Светлая тема - темный цвет текста */
+[data-color-scheme="light"] .blog-hero {
+  color: var(--color-text);
+}
+
+[data-theme="light"] .blog-hero {
+  color: var(--color-text);
+}
+
+/* Темная тема - белый цвет текста (по умолчанию) */
+[data-color-scheme="dark"] .blog-hero {
+  color: white;
+}
+
+[data-theme="dark"] .blog-hero {
+  color: white;
 }
 
 .blog-hero::before {
@@ -4337,7 +4425,7 @@ body:not(.preload) .container {
 /* Blog View All Button */
 .blog__view-all {
   text-align: center;
-  margin-top: var(--space-48);
+  margin-top: var(--space-80);
 }
 
 .blog__view-all-btn {
@@ -4412,6 +4500,7 @@ body:not(.preload) .container {
 /* Dark Theme Adjustments */
 [data-theme="dark"] .blog-hero {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: var(--color-text);
 }
 
 [data-theme="dark"] .blog-category-btn {

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест смены цвета текста</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .demo-hero {
+            padding: 40px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            color: white; /* Белый по умолчанию */
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        /* Светлая тема - темный текст */
+        [data-color-scheme="light"] .demo-hero,
+        [data-theme="light"] .demo-hero {
+            color: var(--color-text);
+        }
+        /* Темная тема - белый текст */
+        [data-color-scheme="dark"] .demo-hero,
+        [data-theme="dark"] .demo-hero {
+            color: white;
+        }
+        .theme-info {
+            background: var(--color-surface);
+            color: var(--color-text);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Тест смены цвета текста в hero-секции</h1>
+        
+        <button class="theme-toggle" id="themeToggle" style="padding: 10px 20px; margin: 10px; border: 1px solid; cursor: pointer;">
+            <span class="theme-toggle__icon">🌙</span> Переключить тему
+        </button>
+        
+        <div class="demo-hero">
+            <h2>Демо Hero-секция</h2>
+            <p>Делюсь опытом разработки на платформе 1С, лучшими практиками и решениями реальных задач</p>
+        </div>
+        
+        <div class="theme-info">
+            <h3>Информация о текущей теме:</h3>
+            <p><strong>data-color-scheme:</strong> <span id="colorScheme">—</span></p>
+            <p><strong>data-theme:</strong> <span id="dataTheme">—</span></p>
+            <p><strong>Переменная --color-text:</strong> <span id="colorText">—</span></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        function updateThemeInfo() {
+            const colorScheme = document.documentElement.getAttribute('data-color-scheme') || 'не установлено';
+            const dataTheme = document.body.getAttribute('data-theme') || 'не установлено';
+            const colorText = getComputedStyle(document.documentElement).getPropertyValue('--color-text');
+            
+            document.getElementById('colorScheme').textContent = colorScheme;
+            document.getElementById('dataTheme').textContent = dataTheme;
+            document.getElementById('colorText').textContent = colorText || 'не определено';
+        }
+
+        // Обновляем при загрузке
+        document.addEventListener('DOMContentLoaded', updateThemeInfo);
+
+        // Наблюдаем за изменениями
+        const observer = new MutationObserver(updateThemeInfo);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-color-scheme'] });
+        observer.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
+    </script>
+</body>
+</html>

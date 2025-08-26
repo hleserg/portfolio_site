@@ -12,6 +12,18 @@
     <meta name="language" content="Russian">
     <meta name="revisit-after" content="7 days">
     
+    <!-- Additional SEO meta tags -->
+    <meta name="geo.region" content="RU">
+    <meta name="geo.country" content="Russia">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    <meta name="referrer" content="origin-when-cross-origin">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Hreflang for language targeting -->
+    <link rel="alternate" hreflang="ru" href="https://skhlebnikov.ru/blog/">
+    <link rel="alternate" hreflang="x-default" href="https://skhlebnikov.ru/blog/">&
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skhlebnikov.ru/blog/">
@@ -23,12 +35,21 @@
     <meta property="og:image:alt" content="Блог программиста 1С - Сергей Хлебников">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:site_name" content="Сергей Хлебников - Программист 1С">
+    <meta property="article:author" content="https://skhlebnikov.ru/">
+    <meta property="article:section" content="Программирование">
+    <meta property="article:tag" content="1С">
+    <meta property="article:tag" content="Программирование">
+    <meta property="article:tag" content="Интеграция">
+    <meta property="article:tag" content="Автоматизация">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@skhlebnikov">
+    <meta name="twitter:creator" content="@skhlebnikov">
     <meta name="twitter:title" content="Блог программиста 1С - Сергей Хлебников">
     <meta name="twitter:description" content="Практические советы и решения для разработчиков 1С. Интеграции, автоматизация, примеры кода.">
     <meta name="twitter:image" content="https://skhlebnikov.ru/photo_2022-07-26_20-37-26.jpg">
+    <meta name="twitter:image:alt" content="Блог программиста 1С - Сергей Хлебников">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://skhlebnikov.ru/blog/">
@@ -46,47 +67,110 @@
     <link rel="dns-prefetch" href="//mc.yandex.ru">
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     
+    <!-- Resource hints for better performance -->
+    <link rel="prefetch" href="../">
+    <link rel="prefetch" href="../style.css">
+    <link rel="prefetch" href="../app.js">
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#218c8d">
+    <meta name="msapplication-TileColor" content="#218c8d">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Blog",
-      "@id": "https://skhlebnikov.ru/blog/",
-      "url": "https://skhlebnikov.ru/blog/",
-      "name": "Блог программиста 1С - Сергей Хлебников",
-      "description": "Практические советы, примеры кода и решения реальных задач по разработке на платформе 1С",
-      "author": {
-        "@type": "Person",
-        "name": "Хлебников Сергей Юрьевич",
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "@id": "https://skhlebnikov.ru/blog/",
+        "url": "https://skhlebnikov.ru/blog/",
+        "name": "Блог программиста 1С - Сергей Хлебников",
+        "headline": "Блог программиста 1С - Практические советы и решения",
+        "description": "Практические советы, примеры кода и решения реальных задач по разработке на платформе 1С. Интеграции, автоматизация, ФГИС Меркурий, мобильные приложения.",
+        "author": {
+          "@type": "Person",
+          "name": "Хлебников Сергей Юрьевич",
+          "url": "https://skhlebnikov.ru/",
+          "jobTitle": "Ведущий программист 1С",
+          "description": "Ведущий программист 1С с 10+ летним опытом разработки",
+          "sameAs": [
+            "https://t.me/skhlebnikov",
+            "https://github.com/hleserg"
+          ],
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Freelance"
+          }
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Хлебников Сергей Юрьевич",
+          "url": "https://skhlebnikov.ru/"
+        },
+        "dateCreated": "2025-08-24",
+        "dateModified": "2025-08-26",
+        "inLanguage": "ru-RU",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Программисты 1С, IT-специалисты, разработчики"
+        },
+        "keywords": ["1С разработка", "программирование 1С", "интеграция", "автоматизация", "ФГИС Меркурий", "ТСД", "мобильные приложения", "веб-сервисы"],
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "1С:Предприятие",
+            "description": "Платформа для разработки прикладных решений"
+          },
+          {
+            "@type": "Thing", 
+            "name": "Программирование",
+            "description": "Разработка программного обеспечения"
+          },
+          {
+            "@type": "Thing",
+            "name": "Интеграция систем",
+            "description": "Связывание различных информационных систем"
+          }
+        ],
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://skhlebnikov.ru/blog/"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://skhlebnikov.ru/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Блог",
+            "item": "https://skhlebnikov.ru/blog/"
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
         "url": "https://skhlebnikov.ru/",
-        "jobTitle": "Ведущий программист 1С",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Freelance"
+        "name": "Сергей Хлебников - Программист 1С",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://skhlebnikov.ru/blog/?search={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
         }
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "Хлебников Сергей Юрьевич",
-        "url": "https://skhlebnikov.ru/"
-      },
-      "inLanguage": "ru-RU",
-      "keywords": ["1С разработка", "программирование 1С", "интеграция", "автоматизация", "ФГИС Меркурий"],
-      "about": [
-        {
-          "@type": "Thing",
-          "name": "1С:Предприятие"
-        },
-        {
-          "@type": "Thing", 
-          "name": "Программирование"
-        },
-        {
-          "@type": "Thing",
-          "name": "Интеграция систем"
-        }
-      ]
-    }
+      }
+    ]
     </script>
 </head>
 <body class="blog-page">
@@ -141,16 +225,34 @@
     </header>
 
     <!-- Main Content -->
-    <main>
+    <main id="main-content" role="main">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="Хлебные крошки" class="breadcrumb">
+            <div class="container">
+                <ol class="breadcrumb__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                    <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a href="../" itemprop="item" class="breadcrumb__link">
+                            <span itemprop="name">Главная</span>
+                        </a>
+                        <meta itemprop="position" content="1">
+                    </li>
+                    <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <span itemprop="name" class="breadcrumb__current">Блог</span>
+                        <meta itemprop="position" content="2">
+                    </li>
+                </ol>
+            </div>
+        </nav>
+
         <!-- Blog Hero Section -->
-        <section class="blog-hero">
+        <section class="blog-hero" itemscope itemtype="https://schema.org/WebPageElement">
             <div class="container">
                 <div class="blog-hero__content">
-                    <h1 class="blog-hero__title">
-                        <span class="blog-hero__icon">📝</span>
+                    <h1 class="blog-hero__title" itemprop="name">
+                        <span class="blog-hero__icon" aria-hidden="true">📝</span>
                         Блог программиста 1С
                     </h1>
-                    <p class="blog-hero__subtitle">
+                    <p class="blog-hero__subtitle" itemprop="description">
                         Делюсь опытом разработки на платформе 1С, лучшими практиками и решениями реальных задач
                     </p>
                 </div>
@@ -158,61 +260,64 @@
         </section>
 
         <!-- Blog Articles Section -->
-        <section class="blog-main">
+        <section class="blog-main" itemscope itemtype="https://schema.org/Blog">
             <div class="container">
                 <!-- Categories Filter -->
-                <div class="blog-categories">
+                <aside class="blog-categories" role="complementary" aria-label="Фильтр по категориям">
                     <h2 class="blog-categories__title">Категории</h2>
-                    <div class="blog-categories__list">
-                        <button class="blog-category-btn blog-category-btn--active" data-category="all">
+                    <div class="blog-categories__list" role="tablist" aria-label="Выбор категории статей">
+                        <button class="blog-category-btn blog-category-btn--active" data-category="all" role="tab" aria-selected="true" aria-controls="blog-articles">
                             Все статьи
                         </button>
-                        <button class="blog-category-btn" data-category="integration">
+                        <button class="blog-category-btn" data-category="integration" role="tab" aria-selected="false" aria-controls="blog-articles">
                             Интеграция
                         </button>
-                        <button class="blog-category-btn" data-category="automation">
+                        <button class="blog-category-btn" data-category="automation" role="tab" aria-selected="false" aria-controls="blog-articles">
                             Автоматизация
                         </button>
-                        <button class="blog-category-btn" data-category="mobile">
+                        <button class="blog-category-btn" data-category="mobile" role="tab" aria-selected="false" aria-controls="blog-articles">
                             Мобильные приложения
                         </button>
-                        <button class="blog-category-btn" data-category="analytics">
+                        <button class="blog-category-btn" data-category="analytics" role="tab" aria-selected="false" aria-controls="blog-articles">
                             Аналитика
                         </button>
                     </div>
-                </div>
+                </aside>
 
                 <!-- Search -->
-                <div class="blog-search">
+                <div class="blog-search" role="search">
                     <div class="blog-search__wrapper">
+                        <label for="blogSearch" class="visually-hidden">Поиск по статьям блога</label>
                         <input 
-                            type="text" 
+                            type="search" 
                             class="blog-search__input" 
                             placeholder="Поиск по статьям..." 
                             id="blogSearch"
                             aria-label="Поиск по статьям блога"
+                            autocomplete="off"
+                            spellcheck="false"
                         >
-                        <button class="blog-search__btn" aria-label="Найти">
-                            🔍
+                        <button class="blog-search__btn" type="submit" aria-label="Выполнить поиск">
+                            <span aria-hidden="true">🔍</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Articles Grid -->
-                <div id="blog-articles" class="blog__articles">
+                <div id="blog-articles" class="blog__articles" role="tabpanel" aria-label="Список статей блога" itemscope itemtype="https://schema.org/ItemList">
                     <!-- Статьи загружаются динамически -->
-                    <div class="blog__loading">
-                        <div class="blog__loading-icon">⏳</div>
+                    <div class="blog__loading" role="status" aria-live="polite">
+                        <div class="blog__loading-icon" aria-hidden="true">⏳</div>
                         <h3>Загрузка статей блога...</h3>
                         <p>Если статьи не загружаются, убедитесь что:</p>
                         <ul class="blog__loading-tips">
-                            <li>📡 Используется HTTP сервер (не file://)</li>
-                            <li>🔄 JavaScript включен в браузере</li>
-                            <li>🌐 Есть доступ к файлам статей</li>
+                            <li><span aria-hidden="true">📡</span> Используется HTTP сервер (не file://)</li>
+                            <li><span aria-hidden="true">🔄</span> JavaScript включен в браузере</li>
+                            <li><span aria-hidden="true">🌐</span> Есть доступ к файлам статей</li>
                         </ul>
                     </div>
                     <noscript>
-                        <div class="blog__noscript">
+                        <div class="blog__noscript" role="alert">
                             <h3>⚠️ JavaScript отключен</h3>
                             <p>Для работы блога требуется включить JavaScript в браузере.</p>
                         </div>
@@ -305,6 +410,68 @@
     <!-- Scripts -->
     <script src="../app.js" defer></script>
     <script src="blog-manager.js" defer></script>
+    
+    <!-- SEO Enhancement Script -->
+    <script>
+        // Update meta tags with current timestamp for freshness
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update last modified date
+            const now = new Date().toISOString();
+            
+            // Add or update lastmod meta tag
+            let lastmodMeta = document.querySelector('meta[name="lastmod"]');
+            if (!lastmodMeta) {
+                lastmodMeta = document.createElement('meta');
+                lastmodMeta.name = 'lastmod';
+                document.head.appendChild(lastmodMeta);
+            }
+            lastmodMeta.content = now;
+            
+            // Add structured data for webpage
+            const pageStructuredData = {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "@id": "https://skhlebnikov.ru/blog/",
+                "url": "https://skhlebnikov.ru/blog/",
+                "name": "Блог программиста 1С",
+                "description": "Практические советы, примеры кода и решения реальных задач по разработке на платформе 1С",
+                "dateModified": now,
+                "mainEntity": {
+                    "@type": "Blog",
+                    "name": "Блог программиста 1С - Сергей Хлебников"
+                },
+                "breadcrumb": {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Главная",
+                            "item": "https://skhlebnikov.ru/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Блог",
+                            "item": "https://skhlebnikov.ru/blog/"
+                        }
+                    ]
+                }
+            };
+            
+            // Add page structured data
+            const pageScript = document.createElement('script');
+            pageScript.type = 'application/ld+json';
+            pageScript.textContent = JSON.stringify(pageStructuredData);
+            document.head.appendChild(pageScript);
+            
+            // Log for SEO tracking
+            console.log('SEO: Страница блога инициализирована', {
+                lastModified: now,
+                structuredData: 'добавлено'
+            });
+        });
+    </script>
     
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
