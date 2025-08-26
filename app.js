@@ -48,56 +48,60 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Theme management with system preference detection
     const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle.querySelector('.theme-toggle__icon');
     
-    // Function to get system theme preference
-    function getSystemTheme() {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    
-    // Load saved theme or default to system preference
-    const savedTheme = localStorage.getItem('theme');
-    const initialTheme = savedTheme || getSystemTheme();
-    setTheme(initialTheme);
-    
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    mediaQuery.addEventListener('change', function(e) {
-        // Only update if user hasn't manually set a theme
-        if (!localStorage.getItem('theme')) {
-            const newSystemTheme = e.matches ? 'dark' : 'light';
-            setTheme(newSystemTheme);
+    if (themeToggle) {
+        const themeIcon = themeToggle.querySelector('.theme-toggle__icon');
+        
+        // Function to get system theme preference
+        function getSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
-    });
-    
-    // Theme toggle functionality
-    themeToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
         
-        const currentTheme = document.documentElement.getAttribute('data-color-scheme') || 'light';
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        // Load saved theme or default to system preference
+        const savedTheme = localStorage.getItem('theme');
+        const initialTheme = savedTheme || getSystemTheme();
+        setTheme(initialTheme);
         
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
+        // Listen for system theme changes
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', function(e) {
+            // Only update if user hasn't manually set a theme
+            if (!localStorage.getItem('theme')) {
+                const newSystemTheme = e.matches ? 'dark' : 'light';
+                setTheme(newSystemTheme);
+            }
+        });
         
-        // Add ripple effect
-        createRippleEffect(this);
+        // Theme toggle functionality
+        themeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const currentTheme = document.documentElement.getAttribute('data-color-scheme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            setTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Add ripple effect
+            createRippleEffect(this);
+            
+            // Add bounce animation
+            this.style.transform = 'scale(0.9) rotate(180deg)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+        });
         
-        // Add bounce animation
-        this.style.transform = 'scale(0.9) rotate(180deg)';
-        setTimeout(() => {
-            this.style.transform = '';
-        }, 200);
-    });
-    
-    function setTheme(theme) {
-        // Add loading state
-        themeToggle.classList.add('loading');
-        
-        document.documentElement.setAttribute('data-color-scheme', theme);
-        document.body.setAttribute('data-theme', theme);
-        themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+        function setTheme(theme) {
+            // Add loading state
+            themeToggle.classList.add('loading');
+            
+            document.documentElement.setAttribute('data-color-scheme', theme);
+            document.body.setAttribute('data-theme', theme);
+            if (themeIcon) {
+                themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+            }
         
         // Update meta theme-color for mobile browsers
         let metaThemeColor = document.querySelector('meta[name=theme-color]');
@@ -130,6 +134,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('%c🌙 Светлая тема активирована (показывается луна для переключения на темную)', 'color: #21808d; font-weight: bold; font-size: 14px;');
         }
     }
+    
+    } // Закрытие блока if (themeToggle)
     
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav__link[href^="#"]');

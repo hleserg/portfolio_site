@@ -22,7 +22,9 @@ class SimpleBlogManager {
                 slug: 'top-5-sposobov-integracii-1c',
                 excerpt: 'Подробное сравнение методов интеграции 1С с внешними системами. REST API, SOAP, файловый обмен, COM-соединения и прямой доступ к БД — выбираем оптимальный способ для каждой задачи.',
                 readTime: '25 мин',
-                tags: ['1С интеграция', 'REST API', 'SOAP', 'COM соединения', 'Базы данных']
+                tags: ['1С интеграция', 'REST API', 'SOAP', 'COM соединения', 'Базы данных'],
+                category: 'integration',
+                featured: true
             }
         ];
 

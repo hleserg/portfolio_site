@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог программиста 1С - Сергей Хлебников | Практические советы и решения</title>
+    <meta name="description" content="📝 Блог ведущего программиста 1С. Практические советы, примеры кода, решения реальных задач. ФГИС Меркурий, интеграции, ТСД, автоматизация. 10+ лет опыта в разработке.">
+    <meta name="keywords" content="блог программист 1С, статьи 1С разработка, примеры кода 1С, ФГИС Меркурий, интеграция 1С, автоматизация бизнес-процессов, ТСД мобильные приложения, веб-сервисы 1С, практические советы 1С, обучение 1С программированию">
+    <meta name="author" content="Хлебников Сергей Юрьевич">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="googlebot" content="index, follow">
+    <meta name="language" content="Russian">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://skhlebnikov.ru/blog/">
+    <meta property="og:title" content="Блог программиста 1С - Сергей Хлебников | Практические советы">
+    <meta property="og:description" content="Делюсь опытом разработки на платформе 1С, лучшими практиками и решениями реальных задач. Интеграции, автоматизация, примеры кода.">
+    <meta property="og:image" content="https://skhlebnikov.ru/photo_2022-07-26_20-37-26.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Блог программиста 1С - Сергей Хлебников">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="Сергей Хлебников - Программист 1С">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Блог программиста 1С - Сергей Хлебников">
+    <meta name="twitter:description" content="Практические советы и решения для разработчиков 1С. Интеграции, автоматизация, примеры кода.">
+    <meta name="twitter:image" content="https://skhlebnikov.ru/photo_2022-07-26_20-37-26.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://skhlebnikov.ru/blog/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://mc.yandex.ru">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//mc.yandex.ru">
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "@id": "https://skhlebnikov.ru/blog/",
+      "url": "https://skhlebnikov.ru/blog/",
+      "name": "Блог программиста 1С - Сергей Хлебников",
+      "description": "Практические советы, примеры кода и решения реальных задач по разработке на платформе 1С",
+      "author": {
+        "@type": "Person",
+        "name": "Хлебников Сергей Юрьевич",
+        "url": "https://skhlebnikov.ru/",
+        "jobTitle": "Ведущий программист 1С",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Freelance"
+        }
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Хлебников Сергей Юрьевич",
+        "url": "https://skhlebnikov.ru/"
+      },
+      "inLanguage": "ru-RU",
+      "keywords": ["1С разработка", "программирование 1С", "интеграция", "автоматизация", "ФГИС Меркурий"],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "1С:Предприятие"
+        },
+        {
+          "@type": "Thing", 
+          "name": "Программирование"
+        },
+        {
+          "@type": "Thing",
+          "name": "Интеграция систем"
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="blog-page">
+    <!-- Header -->
+    <header class="header" itemscope itemtype="https://schema.org/WPHeader">
+        <div class="container">
+            <nav class="nav" role="navigation" aria-label="Главная навигация">
+                <div class="nav__brand">
+                    <a href="../" class="nav__logo" aria-label="Перейти на главную">
+                        <span class="nav__logo-text">🏠</span>
+                    </a>
+                </div>
+                
+                <div class="nav__menu" id="navMenu">
+                    <ul class="nav__list nav__list--center">
+                        <li class="nav__item">
+                            <a href="../#about" class="nav__link">О себе</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="../#services" class="nav__link">Услуги</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="../#experience" class="nav__link">Опыт</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="../#portfolio" class="nav__link">Портфолио</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="./" class="nav__link nav__link--active">Блог</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="../#contact" class="nav__link">Контакты</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav__actions">
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                        <span class="theme-toggle__icon">🌙</span>
+                    </button>
+                    
+                    <!-- Mobile Menu Toggle 
+                    <button class="nav__toggle" id="navToggle" aria-label="Открыть меню">
+                        <span class="nav__toggle-line"></span>
+                        <span class="nav__toggle-line"></span>
+                        <span class="nav__toggle-line"></span>
+                    </button>-->
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Blog Hero Section -->
+        <section class="blog-hero">
+            <div class="container">
+                <div class="blog-hero__content">
+                    <h1 class="blog-hero__title">
+                        <span class="blog-hero__icon">📝</span>
+                        Блог программиста 1С
+                    </h1>
+                    <p class="blog-hero__subtitle">
+                        Делюсь опытом разработки на платформе 1С, лучшими практиками и решениями реальных задач
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Articles Section -->
+        <section class="blog-main">
+            <div class="container">
+                <!-- Categories Filter -->
+                <div class="blog-categories">
+                    <h2 class="blog-categories__title">Категории</h2>
+                    <div class="blog-categories__list">
+                        <button class="blog-category-btn blog-category-btn--active" data-category="all">
+                            Все статьи
+                        </button>
+                        <button class="blog-category-btn" data-category="integration">
+                            Интеграция
+                        </button>
+                        <button class="blog-category-btn" data-category="automation">
+                            Автоматизация
+                        </button>
+                        <button class="blog-category-btn" data-category="mobile">
+                            Мобильные приложения
+                        </button>
+                        <button class="blog-category-btn" data-category="analytics">
+                            Аналитика
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="blog-search">
+                    <div class="blog-search__wrapper">
+                        <input 
+                            type="text" 
+                            class="blog-search__input" 
+                            placeholder="Поиск по статьям..." 
+                            id="blogSearch"
+                            aria-label="Поиск по статьям блога"
+                        >
+                        <button class="blog-search__btn" aria-label="Найти">
+                            🔍
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Articles Grid -->
+                <div id="blog-articles" class="blog__articles">
+                    <!-- Статьи загружаются динамически -->
+                    <div class="blog__loading">
+                        <div class="blog__loading-icon">⏳</div>
+                        <h3>Загрузка статей блога...</h3>
+                        <p>Если статьи не загружаются, убедитесь что:</p>
+                        <ul class="blog__loading-tips">
+                            <li>📡 Используется HTTP сервер (не file://)</li>
+                            <li>🔄 JavaScript включен в браузере</li>
+                            <li>🌐 Есть доступ к файлам статей</li>
+                        </ul>
+                    </div>
+                    <noscript>
+                        <div class="blog__noscript">
+                            <h3>⚠️ JavaScript отключен</h3>
+                            <p>Для работы блога требуется включить JavaScript в браузере.</p>
+                        </div>
+                    </noscript>
+                </div>
+
+                <!-- Pagination -->
+                <div id="blog-pagination" class="blog__pagination">
+                    <!-- Пагинация загружается динамически -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Spacer between content and footer -->
+    <div style="height: 80px; background: transparent;"></div>
+
+    <!-- Footer -->
+    <footer class="footer" itemscope itemtype="https://schema.org/WPFooter">
+        <div class="container">
+            <div class="footer__content footer__content--horizontal">
+                <div class="footer__section footer__section--links">
+                    <h3 class="footer__title">Навигация</h3>
+                    <ul class="footer__links footer__links--horizontal">
+                        <a href="../#about" class="footer__link">О себе</a>
+                        <a href="../#services" class="footer__link">Услуги</a>
+                        <a href="../#experience" class="footer__link">Опыт</a>
+                        <a href="../#portfolio" class="footer__link">Портфолио</a>
+                        <a href="./" class="footer__link">Блог</a></li>
+                        <a href="../#contact" class="footer__link">Контакты</a>
+                    </ul>
+                </div>
+                
+                <div class="footer__section footer__section--contact">
+                    <h3 class="footer__title">Контакты</h3>
+                    <div class="footer__contact">
+                        <div class="footer__contact-item" itemscope itemtype="https://schema.org/ContactPoint">
+                            <span class="footer__contact-icon">📧</span>
+                            <a href="mailto:s.khlebnikov@bk.ru" class="footer__contact-link" itemprop="email">
+                                s.khlebnikov@bk.ru
+                            </a>
+                        </div>
+                        <div class="footer__contact-item">
+                            <span class="footer__contact-icon">📱</span>
+                            <a href="tel:+79099567134" class="footer__contact-link">
+                                +7 (909) 956-71-34
+                            </a>
+                        </div>
+                        <div class="footer__contact-item">
+                            <span class="footer__contact-icon">📍</span>
+                            <span class="footer__contact-text">Москва, Зеленоград</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer__section footer__section--social">
+                    <h3 class="footer__title">Социальные сети</h3>
+                    <div class="footer__social">
+                        <a href="https://t.me/hleserg" target="_blank" rel="noopener noreferrer" 
+                           class="footer__social-link" aria-label="Telegram">
+                            <span class="footer__social-icon">📱</span>
+                            <span class="footer__social-text">Telegram</span>
+                        </a>
+                        <a href="https://github.com/hleserg" target="_blank" rel="noopener noreferrer" 
+                           class="footer__social-link" aria-label="GitHub">
+                            <span class="footer__social-icon">💻</span>
+                            <span class="footer__social-text">GitHub</span>
+                        </a>
+                        <a href="https://vk.com/serg.khlebnikov" target="_blank" rel="noopener noreferrer" 
+                           class="footer__social-link" aria-label="VKontakte">
+                            <span class="footer__social-icon">🔗</span>
+                            <span class="footer__social-text">VKontakte</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <div class="footer__copyright">
+                    <p>&copy; 2025 Хлебников Сергей Юрьевич. Все права защищены.</p>
+                </div>
+                <div class="footer__meta">
+                    <span class="footer__meta-item">Создано с ❤️ для автоматизации</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../app.js" defer></script>
+    <script src="blog-manager.js" defer></script>
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();
+       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(98765432, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/98765432" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</body>
+</html>

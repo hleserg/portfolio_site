@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статья не найдена - Блог Сергея Хлебникова</title>
+    <meta name="description" content="Запрашиваемая статья не найдена. Вернитесь в блог программиста 1С Сергея Хлебникова для поиска других полезных материалов.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- Theme Support -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 
+                         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__left">
+                    <div class="logo">
+                        <a href="../" class="logo__link">
+                            <span class="logo__text">С.Ю.Х.</span>
+                        </a>
+                    </div>
+                    <div class="blog-button">
+                        <a href="./" class="blog-button-link">
+                            <span class="blog-button__icon">📝</span>
+                            <span class="blog-button__text">Блог</span>
+                        </a>
+                    </div>
+                </div>
+                <nav class="nav">
+                    <ul class="nav__list">
+                        <li><a href="../#about" class="nav__link">О себе</a></li>
+                        <li><a href="../#experience" class="nav__link">Опыт</a></li>
+                        <li><a href="../#projects" class="nav__link">Проекты</a></li>
+                        <li><a href="../#skills" class="nav__link">Навыки</a></li>
+                        <li><a href="../#services" class="nav__link">Услуги</a></li>
+                        <li><a href="../#contact" class="nav__link">Контакты</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                    <span class="theme-toggle__icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="error-404">
+                <div class="error-404__content">
+                    <div class="error-404__icon">📄</div>
+                    <h1 class="error-404__title">Статья не найдена</h1>
+                    <p class="error-404__description">
+                        К сожалению, запрашиваемая статья не существует или была перемещена.
+                        Возможно, вы перешли по устаревшей ссылке.
+                    </p>
+                    
+                    <div class="error-404__actions">
+                        <a href="./" class="error-404__btn error-404__btn--primary">
+                            <span class="error-404__btn-icon">📝</span>
+                            Перейти в блог
+                        </a>
+                        <a href="../" class="error-404__btn error-404__btn--secondary">
+                            <span class="error-404__btn-icon">🏠</span>
+                            На главную
+                        </a>
+                    </div>
+                    
+                    <div class="error-404__suggestions">
+                        <h3 class="error-404__suggestions-title">Возможно, вас заинтересует:</h3>
+                        <ul class="error-404__suggestions-list">
+                            <li>
+                                <a href="top-5-sposobov-integracii-1c/" class="error-404__suggestion-link">
+                                    Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../#services" class="error-404__suggestion-link">
+                                    Мои услуги по разработке на 1С
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../#experience" class="error-404__suggestion-link">
+                                    Опыт работы и портфолио проектов
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section footer__section--about">
+                    <div class="footer__brand">
+                        <div class="footer__logo">
+                            <span class="footer__logo-text">С. Хлебников</span>
+                            <span class="footer__logo-subtitle">Программист 1С</span>
+                        </div>
+                        <p class="footer__description">
+                            Ведущий программист 1С с опытом 10+ лет. Специализируюсь на интеграции ФГИС Меркурий, 
+                            разработке мобильных приложений ТСД и автоматизации бизнес-процессов.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="footer__section footer__section--contact">
+                    <h3 class="footer__title">Контакты</h3>
+                    <div class="footer__contact">
+                        <div class="footer__contact-item">
+                            <span class="footer__contact-icon">📧</span>
+                            <a href="mailto:s.khlebnikov@bk.ru" class="footer__contact-link">
+                                s.khlebnikov@bk.ru
+                            </a>
+                        </div>
+                        <div class="footer__contact-item">
+                            <span class="footer__contact-icon">📱</span>
+                            <a href="tel:+79099567134" class="footer__contact-link">
+                                +7 (909) 956-71-34
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <div class="footer__copyright">
+                    <p>&copy; 2025 Хлебников Сергей Юрьевич. Все права защищены.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../app.js" defer></script>
+</body>
+</html>
