@@ -133,6 +133,15 @@
     var content = create('div', { class: 'cookie-banner__content' }, [text, buttons]);
 
     var banner = create('div', { id: 'cookie-consent-banner', class: 'cookie-banner', role: 'dialog', 'aria-live': 'polite', 'aria-label': 'Уведомление об использовании cookies' }, [content]);
+    // Inline safety styles to guarantee viewport-fixed positioning on mobile
+    try {
+      banner.style.position = 'fixed';
+      banner.style.left = '16px';
+      banner.style.right = '16px';
+      banner.style.bottom = 'calc(16px + env(safe-area-inset-bottom))';
+      banner.style.zIndex = '2147483000';
+      banner.style.pointerEvents = 'auto';
+    } catch (e) {}
 
     acceptBtn.addEventListener('click', function () {
       setState('accepted');
