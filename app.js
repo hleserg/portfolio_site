@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Theme toggle functionality
         let themeToggleClickCount = 0;
-        const EASTER_EGG_ACTIVATION_COUNT = 10;
+        const EASTER_EGG_ACTIVATION_COUNT = 5;
 
         themeToggle.addEventListener('click', function(e) {
             e.preventDefault();
