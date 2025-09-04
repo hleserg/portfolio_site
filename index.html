@@ -1084,12 +1084,17 @@
             <div class="skills__grid">
                 <div class="skill-category">
                     <h3 class="skill-category__title">1С Разработка (10+ лет)</h3>
-                    <div class="skill-category__level">95%</div>
+                    <div class="skill-category__level">100%</div>
                     <div class="skill-category__items">
                         <span class="skill-tag">1С:Предприятие 8</span>
                         <span class="skill-tag">1С:УТ</span>
                         <span class="skill-tag">1С:Бухгалтерия</span>
                         <span class="skill-tag">1С:УПП</span>
+                        <span class="skill-tag">1С:ERP</span>
+                        <span class="skill-tag">1С:ЗУП</span>
+                        <span class="skill-tag">1С:Розница</span>
+                        <span class="skill-tag">1С:ДО</span>
+                        <span class="skill-tag">1С:КА</span>
                     </div>
                 </div>
 
@@ -1097,9 +1102,13 @@
                     <h3 class="skill-category__title">API и Интеграции</h3>
                     <div class="skill-category__level">90%</div>
                     <div class="skill-category__items">
-                        <span class="skill-tag">SOAP/REST API</span>
+                        <span class="skill-tag">REST API</span>
+                        <span class="skill-tag">SOAP</span>
+                        <span class="skill-tag">JSON</span>
+                        <span class="skill-tag">XML</span>
+                        <span class="skill-tag">COM</span>
+                        <span class="skill-tag">ODBS</span>
                         <span class="skill-tag">Telegram Bot API</span>
-                        <span class="skill-tag">XML/JSON</span>
                     </div>
                 </div>
 
@@ -1130,6 +1139,8 @@
                         <span class="skill-tag">ТСД</span>
                         <span class="skill-tag">Сканеры</span>
                         <span class="skill-tag">Принтеры этикеток</span>
+                        <span class="skill-tag">Весы</span>
+                        <span class="skill-tag">Кассовое оборудование</span>
                     </div>
                 </div>
 
@@ -1354,5 +1365,19 @@
 
     <script src="cookie-consent.js"></script>
     <script src="app.js"></script>
+
+    <!-- Easter Egg Game Container -->
+    <div id="easterEggGame" class="easter-egg-game">
+        <div id="gameCanvas" class="game-canvas"></div>
+        <div id="gameControls" class="game-controls">
+            <button id="startGameBtn" class="btn btn--primary">Начать игру</button>
+            <button id="closeGameBtn" class="btn btn--outline">Закрыть</button>
+        </div>
+        <div id="gameOverScreen" class="game-over-screen">
+            <h3>Игра окончена!</h3>
+            <p>Ваш счет: <span id="finalScore">0</span></p>
+            <button id="restartGameBtn" class="btn btn--primary">Играть снова</button>
+        </div>
+    </div>
 </body>
 </html>

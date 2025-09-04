@@ -118,6 +118,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Theme toggle functionality
+        let themeToggleClickCount = 0;
+        const EASTER_EGG_ACTIVATION_COUNT = 10;
+
         themeToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -140,9 +143,34 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 this.style.transform = '';
             }, 200);
+
+            // Easter egg logic
+            themeToggleClickCount++;
+            console.log(`Easter egg clicks: ${themeToggleClickCount}`);
+            if (themeToggleClickCount >= EASTER_EGG_ACTIVATION_COUNT) {
+                console.log('🎉 Пасхалка активирована!');
+                activateEasterEgg();
+                themeToggleClickCount = 0; // Reset count after activation
+            }
         });
         
     } // Закрытие блока if (themeToggle)
+
+    // Easter Egg Activation Function
+    function activateEasterEgg() {
+        const easterEggContainer = document.getElementById('easterEggGame');
+        if (easterEggContainer) {
+            easterEggContainer.classList.add('active');
+            // Optionally, start the game here
+            startGame();
+        }
+    }
+
+    // Placeholder for game start function
+    function startGame() {
+        console.log('🕹️ Игра "Арканоид" запущена!');
+        // Game logic will go here
+    }
     
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav__link[href^="#"]');
@@ -406,38 +434,43 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastScrollTop = 0;
     let ticking = false;
     const header = document.querySelector('.header');
-    
+
     function updateHeader() {
+        if (!header) { ticking = false; return; }
+        // Ensure preload styles don't block transforms after first interaction
+        document.body.classList.remove('preload');
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
+
+        // Hide on scroll down after threshold; show on scroll up
         if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scrolling down
-            header.style.transform = 'translateY(-100%)';
+            header.classList.add('header--hidden');
         } else {
-            // Scrolling up
-            header.style.transform = 'translateY(0)';
+            header.classList.remove('header--hidden');
         }
-        
-        // Add subtle shadow based on scroll
+
+        // Shadow on scroll
         if (scrollTop > 50) {
-            header.style.boxShadow = 'var(--shadow-sm)';
+            header.classList.add('header--shadow');
         } else {
-            header.style.boxShadow = 'none';
+            header.classList.remove('header--shadow');
         }
-        
+
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         ticking = false;
     }
-    
+
     window.addEventListener('scroll', function() {
         if (!ticking) {
             requestAnimationFrame(updateHeader);
             ticking = true;
         }
-        
+
         // Update active navigation
         updateActiveNavigation();
     });
+
+    // Run once on load to set initial state
+    updateHeader();
     
     // Update active navigation based on scroll position
     function updateActiveNavigation() {
@@ -795,4 +828,347 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Инициализируем кнопку "Наверх"
     initScrollToTop();
+
+    // --- ASCII Arkanoid Game Logic ---
+    const gameCanvasElement = document.getElementById('gameCanvas');
+    const startGameBtn = document.getElementById('startGameBtn');
+    const closeGameBtn = document.getElementById('closeGameBtn');
+    const gameOverScreen = document.getElementById('gameOverScreen');
+    const restartGameBtn = document.getElementById('restartGameBtn');
+    const finalScoreSpan = document.getElementById('finalScore');
+    const easterEggGameContainer = document.getElementById('easterEggGame');
+
+    let gameInterval;
+    let gameRunning = false;
+    let score = 0;
+    let lives = 3;
+
+    // Game board dimensions
+    const GAME_WIDTH = 40;
+    const GAME_HEIGHT = 20;
+
+    // Paddle properties
+    let paddleX = Math.floor(GAME_WIDTH / 2) - 3;
+    const PADDLE_WIDTH = 7;
+    const PADDLE_CHAR = '=';
+
+    // Ball properties
+    let ballX = paddleX + Math.floor(PADDLE_WIDTH / 2);
+    let ballY = GAME_HEIGHT - 2;
+    let ballDx = 1; // -1 for left, 1 for right
+    let ballDy = -1; // -1 for up, 1 for down
+    const BALL_CHAR = 'O';
+
+    // Speed and acceleration variables
+    let gameSpeed = 200; // Start at 200ms, will speed up
+    let speedMultiplier = 1.0;
+    let gameTime = 0;
+
+    // Blocks properties - improved with random generation
+    let blocks = [];
+    const BLOCK_CHAR = '#';
+    const BLOCK_ROWS = 6; // Increase rows for more variety
+    const BLOCK_COLS = 10;
+    const BLOCK_PATTERNS = [
+        // Pattern 1: Standard bricks
+        [
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111"
+        ],
+        // Pattern 2: Arrow shape
+        [
+            "00111001100",
+            "01111111110",
+            "11111111111",
+            "01111111110",
+            "00111001100",
+            "00010001000"
+        ],
+        // Pattern 3: Wave pattern
+        [
+            "01110111011",
+            "11011101111",
+            "11101110110",
+            "01110111011",
+            "11011101111",
+            "11101110110"
+        ],
+        // Pattern 4: Random holes
+        [
+            "11101110111",
+            "10111011011",
+            "11101110111",
+            "11011101110",
+            "10111011011",
+            "11101110111"
+        ],
+        // Pattern 5: Pyramid
+        [
+            "00001110000",
+            "00011111000",
+            "00111111100",
+            "01111111110",
+            "11111111111",
+            "11111111111"
+        ]
+    ];
+
+    function initializeBlocks() {
+        blocks = [];
+        // Choose random pattern from available patterns
+        const selectedPatternIndex = Math.floor(Math.random() * BLOCK_PATTERNS.length);
+        const selectedPattern = BLOCK_PATTERNS[selectedPatternIndex];
+
+        for (let r = 0; r < BLOCK_ROWS; r++) {
+            blocks[r] = [];
+            for (let c = 0; c < BLOCK_COLS; c++) {
+                // Use pattern to determine if block exists ('1' = exists, '0' = empty)
+                blocks[r][c] = selectedPattern[r][c] === '1';
+            }
+        }
+
+        console.log(`🎯 Генерирован случайный узор блоков #${selectedPatternIndex + 1}`);
+    }
+
+    function drawGame() {
+        let board = Array(GAME_HEIGHT).fill(null).map(() => Array(GAME_WIDTH).fill(' '));
+
+        // Draw blocks
+        for (let r = 0; r < BLOCK_ROWS; r++) {
+            for (let c = 0; c < BLOCK_COLS; c++) {
+                if (blocks[r][c]) {
+                    board[r + 1][c * 4 + 1] = BLOCK_CHAR; // Adjust position for ASCII art
+                    board[r + 1][c * 4 + 2] = BLOCK_CHAR;
+                }
+            }
+        }
+
+        // Draw paddle
+        for (let i = 0; i < PADDLE_WIDTH; i++) {
+            board[GAME_HEIGHT - 1][paddleX + i] = PADDLE_CHAR;
+        }
+
+        // Draw ball
+        board[ballY][ballX] = BALL_CHAR;
+
+        // Convert board to string
+        let output = '';
+        for (let r = 0; r < GAME_HEIGHT; r++) {
+            output += board[r].join('') + '\n';
+        }
+
+        // Add score and lives
+        output += `Score: ${score} Lives: ${lives}`;
+        gameCanvasElement.textContent = output;
+    }
+
+    function updateGame() {
+        // Speed up game over time
+        gameTime++;
+        if (gameTime % 50 === 0 && gameSpeed > 50) { // Increase speed every 50 updates (not too fast)
+            gameSpeed = Math.max(50, gameSpeed - 10); // Speed up, but not below 50ms
+            clearInterval(gameInterval);
+            gameInterval = setInterval(updateGame, gameSpeed);
+            console.log(`⚡ Скорость игры увеличена: ${gameSpeed}ms`);
+        }
+
+        // Move ball
+        ballX += ballDx;
+        ballY += ballDy;
+
+        // Ball collision with walls
+        if (ballX <= 0 || ballX >= GAME_WIDTH - 1) {
+            ballDx *= -1;
+        }
+        if (ballY <= 0) {
+            ballDy *= -1;
+        }
+
+        // Ball collision with paddle
+        if (ballY === GAME_HEIGHT - 2 && ballX >= paddleX && ballX < paddleX + PADDLE_WIDTH) {
+            ballDy *= -1;
+            // Add some randomness or angle based on where it hits the paddle
+            const hitPos = ballX - paddleX;
+            if (hitPos < PADDLE_WIDTH / 3) ballDx = -1;
+            else if (hitPos > PADDLE_WIDTH * 2 / 3) ballDx = 1;
+            else ballDx = 0; // Straight up
+        }
+
+        // Ball collision with blocks
+        for (let r = 0; r < BLOCK_ROWS; r++) {
+            for (let c = 0; c < BLOCK_COLS; c++) {
+                if (blocks[r][c]) {
+                    // Simple collision detection for now
+                    if (ballY === r + 1 && (ballX === c * 4 + 1 || ballX === c * 4 + 2)) {
+                        blocks[r][c] = false;
+                        ballDy *= -1;
+                        score += 10;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Check for game over (ball out of bounds)
+        if (ballY >= GAME_HEIGHT - 1) {
+            lives--;
+            if (lives <= 0) {
+                endGame();
+            } else {
+                // Reset ball position
+                ballX = paddleX + Math.floor(PADDLE_WIDTH / 2);
+                ballY = GAME_HEIGHT - 2;
+                ballDx = 1;
+                ballDy = -1;
+            }
+        }
+
+        // Check if all blocks are cleared
+        if (blocks.every(row => row.every(block => !block))) {
+            endGame(true); // Win condition
+        }
+
+        drawGame();
+    }
+
+    function startGame() {
+        // If game is already running, stop it first
+        if (gameRunning) {
+            clearInterval(gameInterval);
+            gameRunning = false;
+        }
+
+        console.log('🕹️ Игра "Арканоид" запущена!');
+        gameRunning = true;
+        score = 0;
+        lives = 3;
+        initializeBlocks();
+
+        // Reset ball and paddle
+        paddleX = Math.floor(GAME_WIDTH / 2) - 3;
+        ballX = paddleX + Math.floor(PADDLE_WIDTH / 2);
+        ballY = GAME_HEIGHT - 2;
+        ballDx = 1;
+        ballDy = -1;
+
+        // Reset game speed and time
+        gameSpeed = 200;
+        gameTime = 0;
+
+        gameOverScreen.classList.remove('active');
+        easterEggGameContainer.classList.add('active'); // Ensure game container is visible
+        gameInterval = setInterval(updateGame, gameSpeed); // Use variable speed
+        drawGame();
+    }
+
+    function endGame(win = false) {
+        gameRunning = false;
+        clearInterval(gameInterval);
+        finalScoreSpan.textContent = score;
+
+        // Плавный затемняющий/осветляющий переход
+        const gameContainer = document.querySelector('.easter-egg-game');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+
+        // Сначала дополнительно затемнить экран
+        if (gameContainer) {
+            gameContainer.style.background = 'rgba(0, 0, 0, 0.95)';
+        }
+
+        // Показать game over screen
+        gameOverScreen.classList.add('active');
+        if (win) {
+            gameOverScreen.querySelector('h3').textContent = 'Вы выиграли!';
+            gameOverScreen.style.color = '#0f0';
+        } else {
+            gameOverScreen.querySelector('h3').textContent = 'Игра окончена!';
+            gameOverScreen.style.color = '#f00';
+        }
+
+        // Через 3 секунды плавно осветлить и закрыть игру
+        setTimeout(() => {
+            if (gameContainer) {
+                gameContainer.style.transition = 'all 2s ease-out';
+                gameContainer.style.background = 'rgba(0, 0, 0, 0.1)';
+                gameContainer.style.opacity = '0.3';
+
+                // Закрыть через еще 2 секунды после осветления
+                setTimeout(() => {
+                    closeEasterEgg();
+                    // Сбросить стили перехода
+                    setTimeout(() => {
+                        if (gameContainer) {
+                            gameContainer.style.transition = '';
+                            gameContainer.style.background = '';
+                            gameContainer.style.opacity = '';
+                        }
+                    }, 1000);
+                }, 2000);
+            } else {
+                closeEasterEgg();
+            }
+        }, 3000);
+
+        console.log('🛑 Игра "Арканоид" завершена. Счет:', score);
+    }
+
+    function closeEasterEgg() {
+        clearInterval(gameInterval);
+        gameRunning = false;
+        easterEggGameContainer.classList.remove('active');
+        gameOverScreen.classList.remove('active');
+        console.log('🚪 Пасхалка закрыта.');
+    }
+
+    // Keyboard controls for desktop
+    document.addEventListener('keydown', function(e) {
+        if (!gameRunning) return;
+        if (e.key === 'ArrowLeft' || e.key === 'a') {
+            paddleX = Math.max(0, paddleX - 2);
+        } else if (e.key === 'ArrowRight' || e.key === 'd') {
+            paddleX = Math.min(GAME_WIDTH - PADDLE_WIDTH, paddleX + 2);
+        }
+        drawGame();
+    });
+
+    // Touch controls for mobile - Improved boundary checking
+    let touchStartX = 0;
+    gameCanvasElement.addEventListener('touchstart', function(e) {
+        if (!gameRunning) return;
+        touchStartX = e.touches[0].clientX;
+    });
+
+    gameCanvasElement.addEventListener('touchmove', function(e) {
+        if (!gameRunning) return;
+        e.preventDefault(); // Prevent scrolling
+        const touchCurrentX = e.touches[0].clientX;
+        const deltaX = touchCurrentX - touchStartX;
+
+        // Adjust paddle position based on touch movement
+        const oldPaddleX = paddleX;
+        paddleX = Math.max(0, Math.min(GAME_WIDTH - PADDLE_WIDTH, paddleX + Math.round(deltaX / 20)));
+
+        // Only update start position if paddle actually moved (better control)
+        if (paddleX !== oldPaddleX || Math.abs(deltaX) > 15) {
+            touchStartX = touchCurrentX;
+            drawGame();
+        }
+    });
+
+    // Touch end handler for better UX
+    gameCanvasElement.addEventListener('touchend', function(e) {
+        if (!gameRunning) return;
+        // Reset touch tracking
+        touchStartX = 0;
+    });
+
+    // Event listeners for game buttons
+    startGameBtn.addEventListener('click', startGame);
+    restartGameBtn.addEventListener('click', startGame);
+    closeGameBtn.addEventListener('click', closeEasterEgg);
+
 });

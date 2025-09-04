@@ -1025,7 +1025,18 @@ body:not(.preload) .container {
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--color-border);
   z-index: 1000;
-  transition: var(--theme-transition);
+  will-change: transform;
+  /* Smooth hide/show on scroll + theme transitions */
+  transition: var(--theme-transition), transform 0.3s var(--ease-standard), box-shadow var(--duration-normal) var(--ease-standard);
+}
+
+/* Hidden and shadow states for header (override any defaults) */
+.header--hidden {
+  transform: translateY(-100%) !important;
+}
+
+.header--shadow {
+  box-shadow: var(--shadow-sm) !important;
 }
 
 .header__content {
@@ -3977,6 +3988,138 @@ body:not(.preload) .container {
   
   .scroll-to-top::before {
     font-size: 18px;
+  }
+}
+
+/* --- Easter Egg Game Styles --- */
+/* Game container - positioned in visible area with subtle background dimming */
+.easter-egg-game {
+  position: fixed;
+  top: 20vh; /* Position in upper part of visible area */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90vw;
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.85); /* Less aggressive dimming */
+  color: #0f0; /* ASCII green */
+  font-family: 'Monospace', 'Courier New', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 2px solid #0f0;
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+  padding: 20px;
+}
+
+/* Subtle background dimming overlay to maintain site visibility */
+.easter-egg-game::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
+}
+
+.easter-egg-game.active::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.easter-egg-game.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.game-canvas {
+  white-space: pre;
+  text-align: center;
+  font-size: 16px; /* Base font size for ASCII art */
+  line-height: 1;
+  margin-bottom: 20px;
+  background: #000;
+  border: 2px solid #0f0;
+  padding: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+  max-width: 90vw;
+  max-height: 70vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.game-controls {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.game-over-screen {
+  text-align: center;
+  margin-top: 20px;
+  color: #f00; /* Red for game over */
+  font-size: 24px;
+  font-weight: bold;
+  display: none; /* Hidden by default */
+}
+
+.game-over-screen.active {
+  display: block;
+}
+
+.game-over-screen h3 {
+  color: #f00;
+  margin-bottom: 10px;
+}
+
+.game-over-screen p {
+  color: #0f0;
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustments for game */
+@media (max-width: 768px) {
+  .game-canvas {
+    font-size: 12px; /* Smaller font for mobile */
+    padding: 5px;
+    max-width: 95vw;
+    max-height: 60vh;
+  }
+
+  .game-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .game-controls .btn {
+    width: 100%;
+  }
+
+  .game-over-screen {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-canvas {
+    font-size: 10px; /* Even smaller font for very small screens */
+    max-width: 98vw;
+    max-height: 50vh;
   }
 }
 
