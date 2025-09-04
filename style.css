@@ -5018,3 +5018,19 @@ body:not(.preload) .container {
 .cookie-consent-open body {
   transform: none !important;
 }
+
+/* Styles for win link in game over screen */
+.win-link {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #0f0;
+}
+
+.win-link a {
+  color: #0f0;
+  text-decoration: underline;
+}
+
+.win-link a:hover {
+  color: #00ff00;
+}

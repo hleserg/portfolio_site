@@ -161,9 +161,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const easterEggContainer = document.getElementById('easterEggGame');
         if (easterEggContainer) {
             easterEggContainer.classList.add('active');
+            // Send notification to Telegram
+            sendTelegramNotification('Пользователь открыл пасхалку на сайте!');
             // Optionally, start the game here
             startGame();
         }
+    }
+
+    // Function to send Telegram notification
+    function sendTelegramNotification(message) {
+        const botToken = '7548982540:AAHwQ3PNBjnFxzsl-MjU0XmomK3nnaCFkQM';
+        const chatId = '152423085';
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                console.log('✅ Уведомление отправлено в Telegram');
+            } else {
+                console.error('❌ Ошибка отправки уведомления:', data);
+            }
+        })
+        .catch(error => {
+            console.error('❌ Ошибка сети при отправке уведомления:', error);
+        });
     }
 
     // Placeholder for game start function
@@ -1081,12 +1112,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Показать game over screen
         gameOverScreen.classList.add('active');
+        const winLink = document.getElementById('winLink');
         if (win) {
             gameOverScreen.querySelector('h3').textContent = 'Вы выиграли!';
             gameOverScreen.style.color = '#0f0';
+            if (winLink) winLink.style.display = 'block';
         } else {
             gameOverScreen.querySelector('h3').textContent = 'Игра окончена!';
             gameOverScreen.style.color = '#f00';
+            if (winLink) winLink.style.display = 'none';
         }
 
         // Через 3 секунды плавно осветлить и закрыть игру
