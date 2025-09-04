@@ -4814,7 +4814,7 @@ body:not(.preload) .container {
 
 /* Cookie Banner */
 .cookie-banner {
-  position: fixed;
+  position: fixed !important;
   left: var(--space-16);
   right: var(--space-16);
   bottom: var(--space-16);
