@@ -189,6 +189,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         console.log('🎉 Активация пасхалки!');
+        
+        // Отправляем уведомление в Telegram о найденной пасхалке
+        if (typeof window.notifyEasterEggActivation === 'function') {
+            try {
+                await window.notifyEasterEggActivation();
+                console.log('📱 Уведомление о пасхалке отправлено в Telegram');
+            } catch (error) {
+                console.error('❌ Ошибка отправки уведомления о пасхалке:', error);
+            }
+        }
+        
         const easterEggContainer = document.getElementById('easterEggGame');
         if (easterEggContainer) {
             console.log('Найден контейнер пасхалки, добавляю класс active');

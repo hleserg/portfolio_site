@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Telegram API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .log {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .warning { color: #ff9800; }
+        .info { color: #2196F3; }
+        input {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Тест Telegram уведомлений</h1>
+        
+        <div>
+            <h3>1. Настройка Chat ID</h3>
+            <label>
+                Chat ID: 
+                <input type="text" id="chatIdInput" placeholder="Введите ваш Chat ID" value="">
+            </label>
+            <button onclick="setChatId()">Установить Chat ID</button>
+        </div>
+
+        <div>
+            <h3>2. Тестирование API</h3>
+            <button onclick="testApiConnection()">Тест API подключения</button>
+            <button onclick="testTokenRetrieval()">Получить Bot Token</button>
+            <button onclick="sendTestMessage()">Отправить тестовое сообщение</button>
+        </div>
+
+        <div>
+            <h3>3. Эмуляция событий</h3>
+            <button onclick="simulateBlogClick()">Эмулировать клик "Блог"</button>
+            <button onclick="simulateEasterEggActivation()">Эмулировать активацию пасхалки</button>
+        </div>
+
+        <div id="log" class="log">
+            <div class="info">📋 Лог операций появится здесь...</div>
+        </div>
+
+        <div>
+            <h3>4. Инструкции</h3>
+            <ol>
+                <li>Получите ваш Chat ID от бота @userinfobot в Telegram</li>
+                <li>Введите Chat ID в поле выше и нажмите "Установить Chat ID"</li>
+                <li>Протестируйте каждую функцию по порядку</li>
+                <li>Проверьте Telegram на наличие уведомлений</li>
+            </ol>
+            
+            <h4>📝 Как активировать пасхалку на реальном сайте:</h4>
+            <ol>
+                <li>Откройте основной сайт (index.html)</li>
+                <li>Найдите переключатель темы (🌙/☀️) в правом верхнем углу</li>
+                <li>Быстро кликните по нему <strong>5 раз подряд</strong></li>
+                <li>Откроется игра-пасхалка!</li>
+                <li>В Telegram придет уведомление с эмодзи 🥚</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Конфигурация
+        const CONFIG = {
+            apiEndpoint: 'https://skhlebnikov.ru/api/get-telegram-key',
+            chatId: null,
+            botToken: null
+        };
+
+        // Логирование
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type;
+            logDiv.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // Установка Chat ID
+        function setChatId() {
+            const chatId = document.getElementById('chatIdInput').value.trim();
+            if (chatId) {
+                CONFIG.chatId = chatId;
+                log(`✅ Chat ID установлен: ${chatId}`, 'success');
+            } else {
+                log('❌ Введите корректный Chat ID', 'error');
+            }
+        }
+
+        // Тест API подключения
+        async function testApiConnection() {
+            log('🔍 Тестируем подключение к API...', 'info');
+            
+            try {
+                const response = await fetch(CONFIG.apiEndpoint);
+                log(`📡 Статус ответа: ${response.status} ${response.statusText}`, 
+                    response.ok ? 'success' : 'error');
+                
+                if (response.ok) {
+                    const text = await response.text();
+                    log(`📄 Тело ответа: ${text}`, 'info');
+                } else {
+                    log('❌ API недоступен', 'error');
+                }
+            } catch (error) {
+                log(`❌ Ошибка подключения: ${error.message}`, 'error');
+            }
+        }
+
+        // Получение Bot Token
+        async function testTokenRetrieval() {
+            log('🔑 Получаем Bot Token...', 'info');
+            
+            try {
+                const response = await fetch(CONFIG.apiEndpoint);
+                
+                if (!response.ok) {
+                    log(`❌ Ошибка API: ${response.status}`, 'error');
+                    return;
+                }
+
+                const data = await response.json();
+                log(`📋 Данные от API: ${JSON.stringify(data)}`, 'info');
+                
+                if (data.apiKey) {
+                    CONFIG.botToken = data.apiKey;
+                    const maskedToken = data.apiKey.substring(0, 10) + '...' + data.apiKey.substring(data.apiKey.length - 10);
+                    log(`✅ Bot Token получен: ${maskedToken}`, 'success');
+                } else {
+                    log('❌ API ключ не найден в ответе', 'error');
+                }
+            } catch (error) {
+                log(`❌ Ошибка: ${error.message}`, 'error');
+            }
+        }
+
+        // Отправка тестового сообщения
+        async function sendTestMessage() {
+            if (!CONFIG.botToken) {
+                log('❌ Сначала получите Bot Token', 'error');
+                return;
+            }
+
+            if (!CONFIG.chatId) {
+                log('❌ Сначала установите Chat ID', 'error');
+                return;
+            }
+
+            log('📤 Отправляем тестовое сообщение...', 'info');
+
+            const message = `🧪 <b>Тестовое сообщение</b>\n\n` +
+                           `✅ API работает корректно\n` +
+                           `🕐 Время: ${new Date().toLocaleString('ru-RU')}\n` +
+                           `🌐 Тест с: ${window.location.href}`;
+
+            const url = `https://api.telegram.org/bot${CONFIG.botToken}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: CONFIG.chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                if (response.ok) {
+                    log('✅ Тестовое сообщение отправлено!', 'success');
+                    log('📱 Проверьте Telegram', 'info');
+                } else {
+                    const error = await response.json();
+                    log(`❌ Ошибка Telegram API: ${JSON.stringify(error)}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ Ошибка сети: ${error.message}`, 'error');
+            }
+        }
+
+        // Эмуляция клика по кнопке "Блог"
+        async function simulateBlogClick() {
+            if (!CONFIG.botToken) {
+                log('❌ Сначала получите Bot Token', 'error');
+                return;
+            }
+
+            if (!CONFIG.chatId) {
+                log('❌ Сначала установите Chat ID', 'error');
+                return;
+            }
+
+            log('📝 Эмулируем клик по кнопке "Блог"...', 'info');
+
+            const message = `🔔 <b>Уведомление с сайта</b>\n\n` +
+                           `📝 Пользователь нажал на кнопку "Блог"\n` +
+                           `🕐 Время: ${new Date().toLocaleString('ru-RU')}\n` +
+                           `🌐 URL: ${window.location.href}\n` +
+                           `📱 Разрешение экрана: ${screen.width}x${screen.height}\n` +
+                           `🧪 Режим: Тестирование\n` +
+                           `👤 Браузер: ${navigator.userAgent.substring(0, 50)}...`;
+
+            const url = `https://api.telegram.org/bot${CONFIG.botToken}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: CONFIG.chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                if (response.ok) {
+                    log('✅ Уведомление о клике отправлено!', 'success');
+                    log('📱 Проверьте Telegram', 'info');
+                } else {
+                    const error = await response.json();
+                    log(`❌ Ошибка Telegram API: ${JSON.stringify(error)}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ Ошибка сети: ${error.message}`, 'error');
+            }
+        }
+
+        // Эмуляция активации пасхалки
+        async function simulateEasterEggActivation() {
+            if (!CONFIG.botToken) {
+                log('❌ Сначала получите Bot Token', 'error');
+                return;
+            }
+
+            if (!CONFIG.chatId) {
+                log('❌ Сначала установите Chat ID', 'error');
+                return;
+            }
+
+            log('🥚 Эмулируем активацию пасхалки...', 'info');
+
+            const message = `🥚 <b>ПАСХАЛКА НАЙДЕНА!</b>\n\n` +
+                           `🎉 Пользователь активировал пасхалку на сайте!\n` +
+                           `🕐 Время: ${new Date().toLocaleString('ru-RU')}\n` +
+                           `🌐 URL: ${window.location.href}\n` +
+                           `📱 Разрешение экрана: ${screen.width}x${screen.height}\n` +
+                           `🔗 Откуда пришел: Тестовая страница\n` +
+                           `🎮 Способ активации: 5 кликов по переключателю темы\n` +
+                           `💡 Пользователь знает секрет!\n` +
+                           `🧪 Режим: Тестирование\n` +
+                           `👤 Браузер: ${navigator.userAgent.substring(0, 50)}...`;
+
+            const url = `https://api.telegram.org/bot${CONFIG.botToken}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: CONFIG.chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                if (response.ok) {
+                    log('✅ Уведомление о пасхалке отправлено!', 'success');
+                    log('🥚 Проверьте Telegram - должно прийти сообщение с эмодзи яйца', 'info');
+                } else {
+                    const error = await response.json();
+                    log(`❌ Ошибка Telegram API: ${JSON.stringify(error)}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ Ошибка сети: ${error.message}`, 'error');
+            }
+        }
+
+        // Автозагрузка при старте
+        window.addEventListener('load', function() {
+            log('🚀 Страница тестирования загружена', 'success');
+            log('💡 Начните с установки Chat ID', 'info');
+        });
+    </script>
+</body>
+</html>
