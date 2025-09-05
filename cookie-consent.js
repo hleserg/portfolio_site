@@ -94,17 +94,33 @@
         gtag('config', GA_ID);
       });
     } catch (e) {
-      // ignore
+      console.warn('GA initialization failed:', e);
     }
 
-    // Yandex.Metrika
+    // Yandex.Metrika with error handling and fallback
     try {
+      // Initialize Yandex.Metrika
       (function(m,e,t,r,i,k,a){
         m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r;
+        
+        // Add error handling for script loading
+        k.onerror = function() {
+          console.warn('Yandex.Metrika script failed to load - possibly blocked by ad blocker');
+          // Fallback tracking via img pixel if main script fails
+          setTimeout(function() {
+            if (typeof window.ym === 'undefined' || !window.ym.a) {
+              var img = new Image();
+              img.src = 'https://mc.yandex.ru/watch/' + YM_ID + '?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&rnd=' + Math.random();
+            }
+          }, 1000);
+        };
+        
+        a.parentNode.insertBefore(k,a);
       })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
 
+      // Initialize with configuration
       window.ym(YM_ID, 'init', {
         ssr: true,
         webvisor: true,
@@ -113,8 +129,28 @@
         accurateTrackBounce: true,
         trackLinks: true
       });
+      
+      // Set timeout to check if Yandex.Metrika loaded successfully
+      setTimeout(function() {
+        if (typeof window.ym === 'undefined' || !window.ym.a) {
+          console.warn('Yandex.Metrika initialization may have failed - falling back to pixel tracking');
+          // Simple pixel tracking as fallback
+          var img = new Image();
+          img.src = 'https://mc.yandex.ru/watch/' + YM_ID + '?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&rnd=' + Math.random();
+        } else {
+          console.info('Yandex.Metrika initialized successfully');
+        }
+      }, 2000);
+      
     } catch (e) {
-      // ignore
+      console.warn('Yandex.Metrika initialization failed:', e);
+      // Fallback pixel tracking
+      try {
+        var img = new Image();
+        img.src = 'https://mc.yandex.ru/watch/' + YM_ID + '?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&rnd=' + Math.random();
+      } catch (fallbackError) {
+        console.error('Even fallback tracking failed:', fallbackError);
+      }
     }
   }
 
@@ -173,7 +209,54 @@
     isAccepted: function () { return getState() === 'accepted'; },
     accept: function () { setState('accepted'); enableAnalytics(); hideBanner(); },
     reject: function () { setState('rejected'); ensureNoopAnalytics(); hideBanner(); },
-    show: showBanner
+    show: showBanner,
+    
+    // Manual tracking methods that work even with ad blockers
+    track: function(eventName, params) {
+      if (getState() !== 'accepted') return;
+      
+      try {
+        // Try Yandex.Metrika first
+        if (typeof window.ym !== 'undefined' && window.ym.a) {
+          window.ym(YM_ID, 'reachGoal', eventName, params);
+        } else {
+          // Fallback to pixel tracking
+          var img = new Image();
+          var trackingParams = 'event=' + encodeURIComponent(eventName);
+          if (params) {
+            trackingParams += '&params=' + encodeURIComponent(JSON.stringify(params));
+          }
+          img.src = 'https://mc.yandex.ru/watch/' + YM_ID + '?' + trackingParams + '&url=' + encodeURIComponent(location.href) + '&rnd=' + Math.random();
+        }
+        
+        // Try Google Analytics
+        if (typeof window.gtag !== 'undefined') {
+          window.gtag('event', eventName, params);
+        }
+      } catch (e) {
+        console.warn('Manual tracking failed:', e);
+      }
+    },
+    
+    // Page view tracking for SPAs
+    trackPageView: function(page) {
+      if (getState() !== 'accepted') return;
+      
+      try {
+        if (typeof window.ym !== 'undefined' && window.ym.a) {
+          window.ym(YM_ID, 'hit', page || location.href);
+        } else {
+          var img = new Image();
+          img.src = 'https://mc.yandex.ru/watch/' + YM_ID + '?url=' + encodeURIComponent(page || location.href) + '&title=' + encodeURIComponent(document.title) + '&rnd=' + Math.random();
+        }
+        
+        if (typeof window.gtag !== 'undefined') {
+          window.gtag('config', GA_ID, { page_path: page });
+        }
+      } catch (e) {
+        console.warn('Page view tracking failed:', e);
+      }
+    }
   };
 
   // Initialize on DOM ready

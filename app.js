@@ -1316,4 +1316,21 @@ document.addEventListener('DOMContentLoaded', function() {
         closeEasterEgg();
     });
 
+    // Analytics diagnostics
+    setTimeout(function() {
+        console.log('📊 Диагностика аналитики:');
+        console.log('- Cookie consent:', window.CookieConsent ? window.CookieConsent.get() : 'не загружен');
+        console.log('- Yandex.Metrika:', typeof window.ym !== 'undefined' ? 'загружена' : 'не загружена');
+        console.log('- Google Analytics:', typeof window.gtag !== 'undefined' ? 'загружена' : 'не загружена');
+        
+        // Test tracking (only if consent given)
+        if (window.CookieConsent && window.CookieConsent.isAccepted()) {
+            console.log('🎯 Тестируем трекинг...');
+            window.CookieConsent.track('page_loaded', {
+                page: location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }, 3000);
+
 });
