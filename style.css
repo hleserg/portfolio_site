@@ -1026,14 +1026,16 @@ body:not(.preload) .container {
   border-bottom: 1px solid var(--color-border);
   z-index: 1000;
   will-change: transform;
-  /* Smooth hide/show on scroll + theme transitions */
-  transition: var(--theme-transition), transform 0.3s var(--ease-standard), box-shadow var(--duration-normal) var(--ease-standard);
+  /* Smoother transitions for hiding/showing */
+  transition: var(--theme-transition), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow var(--duration-normal) var(--ease-standard);
   pointer-events: auto !important; /* Ensure header is always clickable */
 }
 
-/* Hidden and shadow states for header (override any defaults) */
+/* Hidden and shadow states for header */
 .header--hidden {
   transform: translateY(-100%) !important;
+  /* Optional: reduce opacity for smoother effect */
+  opacity: 0.9;
 }
 
 .header--shadow {

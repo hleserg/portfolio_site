@@ -537,14 +537,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
         // Hide on scroll down after threshold; show on scroll up
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
+        // Increased threshold for better UX
+        if (scrollTop > lastScrollTop && scrollTop > 80) {
+            // Scrolling down - hide header
             header.classList.add('header--hidden');
-        } else {
+        } else if (scrollTop < lastScrollTop) {
+            // Scrolling up - show header  
             header.classList.remove('header--hidden');
         }
 
-        // Shadow on scroll
-        if (scrollTop > 50) {
+        // Shadow on scroll - starts earlier for better visual feedback
+        if (scrollTop > 20) {
             header.classList.add('header--shadow');
         } else {
             header.classList.remove('header--shadow');
