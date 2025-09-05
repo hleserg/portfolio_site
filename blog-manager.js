@@ -17,6 +17,16 @@ class SimpleBlogManager {
     loadArticles() {
         this.articles = [
             {
+                title: 'REST API в 1С: комплексное руководство разработчика',
+                date: new Date(2025, 8, 5), // 5 сентября 2025
+                slug: 'rest-api-1c',
+                excerpt: 'Production-ready REST API в 1С: OData vs HTTP-сервисы, JWT, обработка ошибок, ретраи, валидация JSON, мониторинг, производительность.',
+                readTime: '30 мин',
+                tags: ['REST API', '1С', 'HTTP сервисы', 'OData', 'JWT'],
+                category: 'integration',
+                featured: true
+            },
+            {
                 title: 'Топ-5 способов интеграции 1С: от REST API до прямого доступа к БД',
                 date: new Date(2025, 7, 24), // 24 августа 2025 (месяцы с 0)
                 slug: 'top-5-sposobov-integracii-1c',

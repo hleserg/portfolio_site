@@ -80,6 +80,21 @@
             <news:keywords>1С интеграция, REST API, SOAP, COM соединения, интеграция систем</news:keywords>
         </news:news>
     </url>
+    <url>
+        <loc>https://skhlebnikov.ru/blog/rest-api-1c/</loc>
+        <lastmod>2025-09-05</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <news:news>
+            <news:publication>
+                <news:name>Блог Сергея Хлебникова</news:name>
+                <news:language>ru</news:language>
+            </news:publication>
+            <news:publication_date>2025-09-05T10:00:00+03:00</news:publication_date>
+            <news:title>REST API в 1С:Предприятие — комплексное руководство разработчика</news:title>
+            <news:keywords>REST API 1С, OData 1С, HTTP сервисы 1С, JWT 1С, интеграция 1С</news:keywords>
+        </news:news>
+    </url>
     
     <!-- SEO файлы -->
     <url>
