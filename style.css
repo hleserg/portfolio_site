@@ -1028,6 +1028,7 @@ body:not(.preload) .container {
   will-change: transform;
   /* Smooth hide/show on scroll + theme transitions */
   transition: var(--theme-transition), transform 0.3s var(--ease-standard), box-shadow var(--duration-normal) var(--ease-standard);
+  pointer-events: auto !important; /* Ensure header is always clickable */
 }
 
 /* Hidden and shadow states for header (override any defaults) */
@@ -1215,6 +1216,8 @@ body:not(.preload) .container {
   height: 44px;
   position: relative;
   overflow: hidden;
+  pointer-events: auto !important; /* Ensure theme toggle always works */
+  z-index: 10002 !important; /* Higher than game elements */
 }
 
 .theme-toggle:hover {
@@ -3992,33 +3995,63 @@ body:not(.preload) .container {
 }
 
 /* --- Easter Egg Game Styles --- */
-/* Game container - positioned in visible area with subtle background dimming */
+/* Game container - DESKTOP ONLY */
 .easter-egg-game {
   position: fixed;
-  top: 20vh; /* Position in upper part of visible area */
+  top: 20vh;
   left: 50%;
   transform: translateX(-50%);
   width: 90vw;
   max-width: 600px;
-  background: rgba(0, 0, 0, 0.85); /* Less aggressive dimming */
-  color: #0f0; /* ASCII green */
+  background: rgba(0, 0, 0, 0.95);
+  color: #0f0;
   font-family: 'Monospace', 'Courier New', monospace;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: -1;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: none;
   overflow: hidden;
   border-radius: 12px;
   border: 2px solid #0f0;
   box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
   padding: 20px;
+  pointer-events: none;
 }
 
-/* Subtle background dimming overlay to maintain site visibility */
+/* HIDE EASTER EGG ON MOBILE COMPLETELY */
+@media (max-width: 768px) {
+  .easter-egg-game {
+    display: none !important;
+  }
+  .easter-egg-game::before {
+    display: none !important;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .easter-egg-game {
+    top: 10vh; /* Lower on mobile to avoid overlapping with address bar */
+    width: 95vw;
+    max-width: none;
+    padding: 15px;
+    font-size: 14px; /* Smaller font for mobile */
+    z-index: 10000; /* Higher z-index for mobile */
+  }
+}
+
+@media (max-height: 600px) {
+  .easter-egg-game {
+    top: 5vh; /* Even lower for small screens */
+    padding: 10px;
+  }
+}
+
+/* Subtle background dimming overlay - DESKTOP ONLY */
 .easter-egg-game::before {
   content: '';
   position: fixed;
@@ -4031,17 +4064,30 @@ body:not(.preload) .container {
   z-index: -1;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.5s ease;
+  transition: none;
+  pointer-events: none;
+}
+
+/* HIDE OVERLAY ON MOBILE */
+@media (max-width: 768px) {
+  .easter-egg-game::before {
+    display: none !important;
+  }
 }
 
 .easter-egg-game.active::before {
   opacity: 1;
   visibility: visible;
+  backdrop-filter: none !important; /* Remove blur when active */
+  z-index: 9998 !important; /* Only high z-index when active */
+  pointer-events: none; /* Still don't block clicks, let game handle them */
 }
 
 .easter-egg-game.active {
-  opacity: 1;
-  visibility: visible;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 10000 !important; /* Only high z-index when active */
+  pointer-events: auto !important;
 }
 
 .game-canvas {
@@ -4050,23 +4096,59 @@ body:not(.preload) .container {
   font-size: 16px; /* Base font size for ASCII art */
   line-height: 1;
   margin-bottom: 20px;
-  background: #000;
+  background: #000 !important;
   border: 2px solid #0f0;
   padding: 10px;
   box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
   max-width: 90vw;
   max-height: 70vh;
+  min-height: 300px; /* Ensure visible height */
+  min-width: 400px; /* Ensure visible width */
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  color: #0f0 !important;
+  font-family: 'Courier New', monospace !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .game-controls {
-  display: flex;
+  display: none;
   gap: 15px;
   margin-top: 20px;
+}
+
+.easter-egg-game.active .game-controls {
+  display: flex !important; /* Show when game is active */
+  pointer-events: auto !important;
+}
+
+/* Easter egg game button fixes */
+.easter-egg-game .btn {
+  pointer-events: auto !important;
+  z-index: 10001 !important;
+  position: relative !important;
+}
+
+/* Game canvas content fixes */
+.easter-egg-game.active .game-canvas {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Override pointer-events for critical UI elements */
+.header,
+.header *,
+.theme-toggle,
+.theme-toggle * {
+  pointer-events: auto !important;
 }
 
 .game-over-screen {
@@ -4075,11 +4157,11 @@ body:not(.preload) .container {
   color: #f00; /* Red for game over */
   font-size: 24px;
   font-weight: bold;
-  display: none; /* Hidden by default */
+  display: none !important; /* Hidden by default */
 }
 
 .game-over-screen.active {
-  display: block;
+  display: block !important;
 }
 
 .game-over-screen h3 {
@@ -4102,12 +4184,21 @@ body:not(.preload) .container {
   }
 
   .game-controls {
-    flex-direction: column;
+    flex-direction: row; /* Keep buttons in row on mobile */
     gap: 10px;
+    justify-content: center;
   }
 
   .game-controls .btn {
-    width: 100%;
+    flex: 1; /* Equal width */
+    max-width: 150px; /* Limit width */
+    font-size: 14px; /* Smaller text */
+    pointer-events: auto !important;
+    z-index: 10001 !important;
+  }
+
+  .game-controls #closeGameBtn {
+    display: none; /* Hide close button on mobile */
   }
 
   .game-over-screen {
@@ -5033,4 +5124,11 @@ body:not(.preload) .container {
 
 .win-link a:hover {
   color: #00ff00;
+}
+
+/* Fade out animation for easter egg on loss */
+.easter-egg-game.fade-out {
+  opacity: 0 !important;
+  transform: translateX(-50%) scale(0.95);
+  visibility: hidden;
 }

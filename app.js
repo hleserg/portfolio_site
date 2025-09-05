@@ -47,8 +47,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Theme management with system preference detection
     const themeToggle = document.getElementById('themeToggle');
     
+    console.log('🔧 Кнопка темы найдена:', themeToggle);
+    
     if (themeToggle) {
         const themeIcon = themeToggle.querySelector('.theme-toggle__icon');
+        
+        console.log('🔧 Иконка темы найдена:', themeIcon);
         
         // Function to set theme
         function setTheme(theme) {
@@ -121,11 +125,13 @@ document.addEventListener('DOMContentLoaded', function() {
         let themeToggleClickCount = 0;
         const EASTER_EGG_ACTIVATION_COUNT = 5;
 
-        themeToggle.addEventListener('click', function(e) {
+        // Function to handle theme toggle
+        function handleThemeToggle(e) {
+            console.log('🎨 handleThemeToggle вызван!', e.type, e.target);
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('🎨 Клик по кнопке смены темы');
+            console.log('🎨 Клик/тап по кнопке смены темы', e.type);
             
             const currentTheme = document.documentElement.getAttribute('data-color-scheme') || 'light';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -144,7 +150,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = '';
             }, 200);
 
-            // Easter egg logic
+            // Easter egg logic - DESKTOP ONLY
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                console.log('📱 Мобильное устройство - пасхалка отключена');
+                return; // Exit early on mobile
+            }
+            
             themeToggleClickCount++;
             console.log(`Easter egg clicks: ${themeToggleClickCount}`);
             if (themeToggleClickCount >= EASTER_EGG_ACTIVATION_COUNT) {
@@ -152,25 +164,83 @@ document.addEventListener('DOMContentLoaded', function() {
                 activateEasterEgg();
                 themeToggleClickCount = 0; // Reset count after activation
             }
+        }
+
+        // Add event listeners for both desktop and mobile
+        themeToggle.addEventListener('click', handleThemeToggle, {passive: false});
+        themeToggle.addEventListener('touchstart', handleThemeToggle, {passive: false});
+        
+        // Debug: проверим, что кнопка работает
+        themeToggle.addEventListener('touchend', function(e) {
+            console.log('🔧 TouchEnd на кнопке темы');
         });
+        
+        console.log('✅ Event listeners добавлены для кнопки темы');
         
     } // Закрытие блока if (themeToggle)
 
-    // Easter Egg Activation Function
-    function activateEasterEgg() {
+    // Easter Egg Activation Function - DESKTOP ONLY
+    async function activateEasterEgg() {
+        // Double check - no easter egg on mobile
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+            console.log('📱 Попытка активации пасхалки на мобильном - блокировано');
+            return;
+        }
+        
+        console.log('🎉 Активация пасхалки!');
         const easterEggContainer = document.getElementById('easterEggGame');
         if (easterEggContainer) {
+            console.log('Найден контейнер пасхалки, добавляю класс active');
             easterEggContainer.classList.add('active');
-            // Send notification to Telegram
-            sendTelegramNotification('Пользователь открыл пасхалку на сайте!');
-            // Optionally, start the game here
-            startGame();
+            
+            // Prevent closing when clicking inside the game area
+            easterEggContainer.addEventListener('click', function(e) {
+                e.stopPropagation();
+                console.log('Клик внутри пасхалки, предотвращаю закрытие');
+            });
+            
+            // Проверим, что элементы управления видны
+            const gameControls = document.getElementById('gameControls');
+            const startGameBtn = document.getElementById('startGameBtn');
+            const closeGameBtn = document.getElementById('closeGameBtn');
+            
+            setTimeout(() => {
+                console.log('Через 1 секунду после активации:', {
+                    containerClasses: easterEggContainer.className,
+                    gameControlsDisplay: gameControls ? getComputedStyle(gameControls).display : 'null',
+                    startGameBtnVisible: startGameBtn ? getComputedStyle(startGameBtn).display : 'null',
+                    closeGameBtnVisible: closeGameBtn ? getComputedStyle(closeGameBtn).display : 'null',
+                    containerOpacity: getComputedStyle(easterEggContainer).opacity,
+                    containerVisibility: getComputedStyle(easterEggContainer).visibility
+                });
+            }, 1000);
+            
+            // Get API key from server and send notification
+            try {
+                const apiKey = await getTelegramKey();
+                sendTelegramNotification('Кто-то нашел пасхалку на сайте!', apiKey);
+            } catch (error) {
+                console.error('Failed to get Telegram API key:', error);
+            }
+            // Game will be started by user clicking "Начать игру" button
+        } else {
+            console.error('Контейнер пасхалки не найден!');
         }
     }
 
+    // Function to get Telegram API key from server
+    async function getTelegramKey() {
+        const response = await fetch('/api/get-telegram-key');
+        if (!response.ok) {
+            throw new Error('Failed to fetch API key');
+        }
+        const data = await response.json();
+        return data.apiKey;
+    }
+
     // Function to send Telegram notification
-    function sendTelegramNotification(message) {
-        const botToken = '7548982540:AAHwQ3PNBjnFxzsl-MjU0XmomK3nnaCFkQM';
+    function sendTelegramNotification(message, botToken) {
         const chatId = '152423085';
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
@@ -197,12 +267,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Placeholder for game start function
-    function startGame() {
-        console.log('🕹️ Игра "Арканоид" запущена!');
-        // Game logic will go here
-    }
-    
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav__link[href^="#"]');
     navLinks.forEach(link => {
@@ -885,7 +949,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ball properties
     let ballX = paddleX + Math.floor(PADDLE_WIDTH / 2);
-    let ballY = GAME_HEIGHT - 2;
+    let ballY = GAME_HEIGHT - 3; // Поднимаем выше над платформой
     let ballDx = 1; // -1 for left, 1 for right
     let ballDy = -1; // -1 for up, 1 for down
     const BALL_CHAR = 'O';
@@ -1020,13 +1084,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Ball collision with paddle
-        if (ballY === GAME_HEIGHT - 2 && ballX >= paddleX && ballX < paddleX + PADDLE_WIDTH) {
+        if (ballY >= GAME_HEIGHT - 2 && ballX >= paddleX && ballX < paddleX + PADDLE_WIDTH && ballDy > 0) {
             ballDy *= -1;
+            console.log('🏓 Мячик отбит платформой!');
             // Add some randomness or angle based on where it hits the paddle
             const hitPos = ballX - paddleX;
             if (hitPos < PADDLE_WIDTH / 3) ballDx = -1;
             else if (hitPos > PADDLE_WIDTH * 2 / 3) ballDx = 1;
-            else ballDx = 0; // Straight up
+            else ballDx = ballDx; // Keep current direction
         }
 
         // Ball collision with blocks
@@ -1047,12 +1112,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check for game over (ball out of bounds)
         if (ballY >= GAME_HEIGHT - 1) {
             lives--;
+            console.log('💀 Жизнь потеряна! Осталось жизней:', lives);
             if (lives <= 0) {
+                console.log('💀 Игра окончена - нет жизней');
                 endGame();
             } else {
                 // Reset ball position
+                console.log('🔄 Сброс позиции мячика после потери жизни');
                 ballX = paddleX + Math.floor(PADDLE_WIDTH / 2);
-                ballY = GAME_HEIGHT - 2;
+                ballY = GAME_HEIGHT - 3; // Поднимаем выше
                 ballDx = 1;
                 ballDy = -1;
             }
@@ -1067,6 +1135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function startGame() {
+        console.log('🕹️ startGame() вызвана!');
         // If game is already running, stop it first
         if (gameRunning) {
             clearInterval(gameInterval);
@@ -1077,14 +1146,16 @@ document.addEventListener('DOMContentLoaded', function() {
         gameRunning = true;
         score = 0;
         lives = 3;
+        console.log('🔄 Начальные параметры: score =', score, 'lives =', lives);
         initializeBlocks();
 
         // Reset ball and paddle
         paddleX = Math.floor(GAME_WIDTH / 2) - 3;
         ballX = paddleX + Math.floor(PADDLE_WIDTH / 2);
-        ballY = GAME_HEIGHT - 2;
+        ballY = GAME_HEIGHT - 3; // Поднимаем мячик выше над платформой
         ballDx = 1;
         ballDy = -1;
+        console.log('🏓 Позиция мячика: ballX =', ballX, 'ballY =', ballY);
 
         // Reset game speed and time
         gameSpeed = 200;
@@ -1094,9 +1165,11 @@ document.addEventListener('DOMContentLoaded', function() {
         easterEggGameContainer.classList.add('active'); // Ensure game container is visible
         gameInterval = setInterval(updateGame, gameSpeed); // Use variable speed
         drawGame();
+        console.log('✅ Игра запущена, gameInterval создан');
     }
 
     function endGame(win = false) {
+        console.log('🛑 endGame() вызвана, win =', win);
         gameRunning = false;
         clearInterval(gameInterval);
         finalScoreSpan.textContent = score;
@@ -1105,8 +1178,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const gameContainer = document.querySelector('.easter-egg-game');
         const gameOverScreen = document.getElementById('gameOverScreen');
 
-        // Сначала дополнительно затемнить экран
-        if (gameContainer) {
+        // Сначала дополнительно затемнить экран только для победы
+        if (gameContainer && win) {
             gameContainer.style.background = 'rgba(0, 0, 0, 0.95)';
         }
 
@@ -1121,36 +1194,51 @@ document.addEventListener('DOMContentLoaded', function() {
             gameOverScreen.querySelector('h3').textContent = 'Игра окончена!';
             gameOverScreen.style.color = '#f00';
             if (winLink) winLink.style.display = 'none';
-        }
-
-        // Через 3 секунды плавно осветлить и закрыть игру
-        setTimeout(() => {
+            // Для проигрыша - сразу начать плавное растворение
             if (gameContainer) {
-                gameContainer.style.transition = 'all 2s ease-out';
-                gameContainer.style.background = 'rgba(0, 0, 0, 0.1)';
-                gameContainer.style.opacity = '0.3';
-
-                // Закрыть через еще 2 секунды после осветления
+                gameContainer.classList.add('fade-out');
                 setTimeout(() => {
                     closeEasterEgg();
-                    // Сбросить стили перехода
                     setTimeout(() => {
                         if (gameContainer) {
-                            gameContainer.style.transition = '';
-                            gameContainer.style.background = '';
-                            gameContainer.style.opacity = '';
+                            gameContainer.classList.remove('fade-out');
                         }
                     }, 1000);
                 }, 2000);
-            } else {
-                closeEasterEgg();
             }
-        }, 3000);
+        }
+
+        // Для победы - через 3 секунды осветлить и закрыть
+        if (win) {
+            setTimeout(() => {
+                if (gameContainer) {
+                    gameContainer.style.transition = 'all 2s ease-out';
+                    gameContainer.style.background = 'rgba(0, 0, 0, 0.1)';
+                    gameContainer.style.opacity = '0.3';
+
+                    // Закрыть через еще 2 секунды после осветления
+                    setTimeout(() => {
+                        closeEasterEgg();
+                        // Сбросить стили перехода
+                        setTimeout(() => {
+                            if (gameContainer) {
+                                gameContainer.style.transition = '';
+                                gameContainer.style.background = '';
+                                gameContainer.style.opacity = '';
+                            }
+                        }, 1000);
+                    }, 2000);
+                } else {
+                    closeEasterEgg();
+                }
+            }, 3000);
+        }
 
         console.log('🛑 Игра "Арканоид" завершена. Счет:', score);
     }
 
     function closeEasterEgg() {
+        console.log('🚪 closeEasterEgg() вызвана!');
         clearInterval(gameInterval);
         gameRunning = false;
         easterEggGameContainer.classList.remove('active');
@@ -1201,8 +1289,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Event listeners for game buttons
-    startGameBtn.addEventListener('click', startGame);
-    restartGameBtn.addEventListener('click', startGame);
-    closeGameBtn.addEventListener('click', closeEasterEgg);
+    startGameBtn.addEventListener('click', function() {
+        console.log('🎮 Кнопка "Начать игру" нажата!');
+        startGame();
+    });
+    restartGameBtn.addEventListener('click', function() {
+        console.log('🔄 Кнопка "Играть снова" нажата!');
+        startGame();
+    });
+    closeGameBtn.addEventListener('click', function() {
+        console.log('❌ Кнопка "Закрыть" нажата!');
+        closeEasterEgg();
+    });
 
 });
