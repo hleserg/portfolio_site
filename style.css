@@ -4278,7 +4278,7 @@ body:not(.preload) .container {
 
 /* Blog Hero Section */
 .blog-hero {
-  padding: var(--space-64) 0 var(--space-48) 0;
+  padding: var(--space-6) 0 var(--space-4) 0;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   color: white; /* Белый цвет по умолчанию */
   text-align: center;
@@ -4788,7 +4788,7 @@ body:not(.preload) .container {
 
 @media (max-width: 480px) {
   .blog-hero {
-    padding: var(--space-48) 0 var(--space-32) 0;
+    padding: var(--space-4) 0 var(--space-2) 0;
   }
   
   .blog-hero__stats {
